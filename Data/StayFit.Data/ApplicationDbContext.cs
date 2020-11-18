@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using StayFit.Data.Common.Models;
-    using StayFit.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using StayFit.Data.Common.Models;
+    using StayFit.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -23,6 +22,14 @@
             : base(options)
         {
         }
+
+        public DbSet<Exercise> Exercises { get; set; }
+
+        public DbSet<Equipment> Equipments { get; set; }
+
+        public DbSet<Workout> Workouts { get; set; }
+
+        public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 
