@@ -1,8 +1,8 @@
 ﻿namespace StayFit.Data.Configurations
 {
-    using StayFit.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using StayFit.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using StayFit.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using StayFit.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

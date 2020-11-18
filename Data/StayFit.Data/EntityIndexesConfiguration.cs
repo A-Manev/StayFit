@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using StayFit.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using StayFit.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

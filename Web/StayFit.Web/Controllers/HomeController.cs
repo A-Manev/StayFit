@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using StayFit.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using StayFit.Web.ViewModels;
 
     public class HomeController : BaseController
     {

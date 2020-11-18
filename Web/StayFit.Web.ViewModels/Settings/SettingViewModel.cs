@@ -1,9 +1,8 @@
 ﻿namespace StayFit.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using StayFit.Data.Models;
     using StayFit.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

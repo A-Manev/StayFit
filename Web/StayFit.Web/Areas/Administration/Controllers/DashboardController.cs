@@ -1,9 +1,8 @@
 ﻿namespace StayFit.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using StayFit.Services.Data;
     using StayFit.Web.ViewModels.Administration.Dashboard;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {

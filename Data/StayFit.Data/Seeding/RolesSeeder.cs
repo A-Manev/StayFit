@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using StayFit.Common;
-    using StayFit.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using StayFit.Common;
+    using StayFit.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

@@ -3,9 +3,8 @@ namespace StayFit.Data.Models
 {
     using System;
 
-    using StayFit.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using StayFit.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
