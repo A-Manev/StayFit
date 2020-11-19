@@ -17,7 +17,8 @@
 
         public IActionResult Index()
         {
-            this.scraperService.PupulateDbWithExercises();
+            // Move to administration area.
+            this.scraperService.PopulateDbWithExercises(2);
 
             return this.View();
         }
