@@ -16,6 +16,7 @@
     using StayFit.Data.Models;
     using StayFit.Data.Repositories;
     using StayFit.Data.Seeding;
+    using StayFit.Services;
     using StayFit.Services.Data;
     using StayFit.Services.Mapping;
     using StayFit.Services.Messaging;
@@ -63,6 +64,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IExerciseScraperService, ExerciseScraperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

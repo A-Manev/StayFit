@@ -3,12 +3,22 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using StayFit.Services;
     using StayFit.Web.ViewModels;
 
     public class HomeController : BaseController
     {
+        private readonly IExerciseScraperService scraperService;
+
+        public HomeController(IExerciseScraperService scraperService)
+        {
+            this.scraperService = scraperService;
+        }
+
         public IActionResult Index()
         {
+            this.scraperService.PupulateDbWithExercises();
+
             return this.View();
         }
 
