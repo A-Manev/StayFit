@@ -23,13 +23,31 @@
         {
         }
 
-        public DbSet<Exercise> Exercises { get; set; }
-
         public DbSet<Equipment> Equipments { get; set; }
+
+        public DbSet<Exercise> Exercises { get; set; }
 
         public DbSet<Workout> Workouts { get; set; }
 
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
+
+        public DbSet<UserMeal> UsersMeals { get; set; }
+
+        public DbSet<Meal> Meals { get; set; }
+
+        public DbSet<Ingredient> Ingredients { get; set; }
+
+        public DbSet<MealIngredient> MealIngredients { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<SubCategory> SubCategories { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 

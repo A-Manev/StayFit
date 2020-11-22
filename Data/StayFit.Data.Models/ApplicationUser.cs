@@ -17,6 +17,9 @@ namespace StayFit.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
 
             this.Workouts = new HashSet<Workout>();
+            this.UserMeal = new HashSet<UserMeal>();
+            this.Votes = new HashSet<Vote>();
+            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -36,5 +39,11 @@ namespace StayFit.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<Workout> Workouts { get; set; }
+
+        public virtual ICollection<UserMeal> UserMeal { get; set; }
+
+        public virtual ICollection<Vote> Votes { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
