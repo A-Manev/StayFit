@@ -37,9 +37,9 @@
             {
                 try
                 {
-                    var allExercisethis = this.GetALLExercise(i);
+                    var allExercises = this.GetALLExercise(i);
 
-                    Parallel.ForEach(allExercisethis, (exercise) =>
+                    Parallel.ForEach(allExercises, (exercise) =>
                     {
                         exerciseBag.Add(exercise);
                     });

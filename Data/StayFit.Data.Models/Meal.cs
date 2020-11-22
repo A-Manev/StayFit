@@ -24,7 +24,7 @@
 
         public SkillLevel SkillLevel { get; set; }
 
-        public int PortionCount { get; set; }
+        public string PortionCount { get; set; }
 
         public decimal KCal { get; set; }
 
@@ -41,6 +41,10 @@
         public decimal Protein { get; set; }
 
         public decimal Salt { get; set; }
+
+        public string Description { get; set; }
+
+        public string MethodOfPreparation { get; set; }
 
         public int CategoryId { get; set; }
 
