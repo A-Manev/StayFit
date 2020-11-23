@@ -18,6 +18,8 @@
 
         public string Name { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string PreparationTime { get; set; }
 
         public string CookingTime { get; set; }
