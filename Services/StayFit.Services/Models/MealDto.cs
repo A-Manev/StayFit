@@ -45,7 +45,11 @@
 
         public string CategoryName { get; set; }
 
+        public string CategoryDescription { get; set; }
+
         public string SubCategoryName { get; set; }
+
+        public string SubCategoryDescription { get; set; }
 
         public List<string> Ingredients { get; set; }
     }

@@ -19,17 +19,23 @@
         private readonly IBrowsingContext context;
 
         private readonly IDeletableEntityRepository<Meal> mealRepository;
-        private readonly IDeletableEntityRepository<Category> categotyRepository;
+        private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IDeletableEntityRepository<SubCategory> subCategoryRepository;
+        private readonly IDeletableEntityRepository<Ingredient> ingredientRepository;
+        private readonly IRepository<MealIngredient> mealIngredientRepository;
+        private readonly IRepository<Image> imageRepository;
 
-        public MealScraperService(IDeletableEntityRepository<Meal> mealRepository, IDeletableEntityRepository<Category> categotyRepository, IDeletableEntityRepository<SubCategory> subCategoryRepository)
+        public MealScraperService(IDeletableEntityRepository<Meal> mealRepository, IDeletableEntityRepository<Category> categoryRepository, IDeletableEntityRepository<SubCategory> subCategoryRepository, IDeletableEntityRepository<Ingredient> ingredientRepository, IRepository<MealIngredient> mealIngredientRepository, IRepository<Image> imageRepository)
         {
             this.config = Configuration.Default.WithDefaultLoader();
             this.context = BrowsingContext.New(this.config);
 
             this.mealRepository = mealRepository;
-            this.categotyRepository = categotyRepository;
+            this.categoryRepository = categoryRepository;
             this.subCategoryRepository = subCategoryRepository;
+            this.ingredientRepository = ingredientRepository;
+            this.mealIngredientRepository = mealIngredientRepository;
+            this.imageRepository = imageRepository;
         }
 
         public async Task PopulateDbWithMeal(int pagesCount)
@@ -53,11 +59,11 @@
             {
                 string link = "https://www.bbcgoodfood.com/recipes/category/all-" + category;
 
-                Parallel.For(1, 2, (pageNumber) =>
+                Parallel.For(1, pagesCount, (pageNumber) =>
                 {
                     try
                     {
-                        var allMeal = this.GetCategoryWithAllSubCategories("https://www.bbcgoodfood.com/recipes/category/all-christmas", pageNumber);
+                        var allMeal = this.GetCategoryWithAllSubCategories(link, pageNumber);
 
                         Parallel.ForEach(allMeal, (meal) =>
                         {
@@ -71,12 +77,129 @@
 
                 foreach (var meal in mealBag)
                 {
-                    // TODO add to DB
+                    var categoryId = await this.GetOrCreateCategoryAsync(meal.CategoryName, meal.CategoryDescription);
+                    var subCategoryId = await this.GetOrCreateSubCategoryAsync(meal.SubCategoryName, meal.SubCategoryDescription);
+                    var mealExist = this.mealRepository.AllAsNoTracking().Any(x => x.Name == meal.Name);
+
+                    if (mealExist)
+                    {
+                        continue;
+                    }
+
+                    var newMeal = new Meal
+                    {
+                        Name = meal.Name,
+                        ImageUrl = meal.ImageUrl,
+                        PreparationTime = meal.PreparationTime,
+                        CookingTime = meal.CookingTime,
+                        SkillLevel = meal.SkillLevel,
+                        PortionCount = meal.PortionCount,
+                        KCal = meal.KCal,
+                        Fat = meal.Fat,
+                        Saturates = meal.Saturates,
+                        Carbs = meal.Carbs,
+                        Sugars = meal.Sugars,
+                        Fibre = meal.Fibre,
+                        Protein = meal.Protein,
+                        Salt = meal.Salt,
+                        Description = meal.Description,
+                        MethodOfPreparation = meal.MethodOfPreparation,
+                        CategoryId = categoryId,
+                        SubCategoryId = subCategoryId,
+                    };
+
+                    await this.mealRepository.AddAsync(newMeal);
+                    await this.mealRepository.SaveChangesAsync();
+
+                    foreach (var ingredientNameAndQuantity in meal.Ingredients)
+                    {
+                        var ingridientId = await this.GetOrCreateIngredientAsync(ingredientNameAndQuantity);
+
+                        var mealIngredient = new MealIngredient
+                        {
+                            IngredientId = ingridientId,
+                            MealId = newMeal.Id,
+                        };
+
+                        await this.mealIngredientRepository.AddAsync(mealIngredient);
+                        await this.mealIngredientRepository.SaveChangesAsync();
+                    }
+
+                    var image = new Image
+                    {
+                        Extension = meal.ImageUrl,
+                        MealId = newMeal.Id,
+                    };
+
+                    await this.imageRepository.AddAsync(image);
+                    await this.imageRepository.SaveChangesAsync();
                 }
             }
         }
 
-        private ConcurrentBag<MealDto> GetCategoryWithAllSubCategories(string categoryLink, int pageNumber) // 3th
+        private async Task<int> GetOrCreateIngredientAsync(string ingredientNameAndQuantity)
+        {
+            var ingredient = this.ingredientRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.NameAndQuantity == ingredientNameAndQuantity);
+
+            if (ingredient == null)
+            {
+                ingredient = new Ingredient
+                {
+                    NameAndQuantity = ingredientNameAndQuantity,
+                };
+
+                await this.ingredientRepository.AddAsync(ingredient);
+                await this.ingredientRepository.SaveChangesAsync();
+            }
+
+            return ingredient.Id;
+        }
+
+        private async Task<int> GetOrCreateSubCategoryAsync(string subCategoryName, string subCategoryDescription)
+        {
+            var subCategory = this.subCategoryRepository
+                                .AllAsNoTracking()
+                                .FirstOrDefault(x => x.Name == subCategoryName);
+
+            if (subCategory == null)
+            {
+                subCategory = new SubCategory()
+                {
+                    Name = subCategoryName,
+                    Description = subCategoryDescription,
+                };
+
+                await this.subCategoryRepository.AddAsync(subCategory);
+                await this.subCategoryRepository.SaveChangesAsync();
+            }
+
+            return subCategory.Id;
+        }
+
+        private async Task<int> GetOrCreateCategoryAsync(string categoryName, string categoryDescription)
+        {
+            var category = this.categoryRepository
+                                .AllAsNoTracking()
+                                .FirstOrDefault(x => x.Name == categoryName);
+
+            if (category == null)
+            {
+                category = new Category()
+                {
+                    Name = categoryName,
+                    Description = categoryDescription,
+                };
+
+                await this.categoryRepository.AddAsync(category);
+                await this.categoryRepository.SaveChangesAsync();
+            }
+
+            return category.Id;
+        }
+
+        private ConcurrentBag<MealDto> GetCategoryWithAllSubCategories(string categoryLink, int pageNumber)
         {
             var bag = new ConcurrentBag<MealDto>();
 
@@ -84,7 +207,7 @@
 
             var categoryName = page.QuerySelector("div > h1");
 
-            Console.WriteLine(categoryName.TextContent.Trim());
+            var categoryDescription = page.QuerySelector("div > p");
 
             var allSubCategories = page.QuerySelectorAll("div > div > div.standard-card-new__main-info > div > h4 > a");
 
@@ -97,7 +220,7 @@
 
                 var subCategoryUrl = url[3].Replace('"', ' ').Trim() + "/";
 
-                int pagesCount = 2;
+                int pagesCount = 3;
 
                 Parallel.For(1, pagesCount, (currentPageNumber) =>
                 {
@@ -108,6 +231,7 @@
                         Parallel.ForEach(meals, (meal) =>
                         {
                             meal.CategoryName = categoryName.TextContent.Trim();
+                            meal.CategoryDescription = categoryDescription.TextContent.Trim();
 
                             bag.Add(meal);
                         });
@@ -121,13 +245,15 @@
             return bag;
         }
 
-        private ConcurrentBag<MealDto> GetSubCategoryWithAllMeal(string subCategoryUrl, int pageNumber) // 2nd
+        private ConcurrentBag<MealDto> GetSubCategoryWithAllMeal(string subCategoryUrl, int pageNumber)
         {
             var bag = new ConcurrentBag<MealDto>();
 
             var page = this.context.OpenAsync(subCategoryUrl + pageNumber).GetAwaiter().GetResult();
 
             var subCategoryName = page.QuerySelector("div.template-article__header-main.template-article__header-main--masthead-led > h1");
+
+            var subCategoryDescription = page.QuerySelector("div.template-article__header-main.template-article__header-main--masthead-led > p");
 
             var allMealOnCurrnetSubCategoryPage = page.QuerySelectorAll("div.standard-card-new__main-info > div > h4 > a");
 
@@ -141,7 +267,9 @@
                 var mealUrl = "https://www.bbcgoodfood.com/recipes" + url[1];
 
                 var meal = this.GetMeal(mealUrl);
+
                 meal.SubCategoryName = subCategoryName.TextContent.Trim();
+                meal.SubCategoryDescription = subCategoryDescription.TextContent.Trim();
 
                 bag.Add(meal);
             });
