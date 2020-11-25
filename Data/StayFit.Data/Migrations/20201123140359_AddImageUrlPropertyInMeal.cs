@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace StayFit.Data.Migrations
+﻿namespace StayFit.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddImageUrlPropertyInMeal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

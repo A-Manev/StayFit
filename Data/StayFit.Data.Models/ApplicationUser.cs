@@ -6,6 +6,7 @@ namespace StayFit.Data.Models
 
     using Microsoft.AspNetCore.Identity;
     using StayFit.Data.Common.Models;
+    using StayFit.Data.Models.Enums;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -31,6 +32,25 @@ namespace StayFit.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        // User extend
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public int Age { get; set; }
+
+        public double CurrentWeight { get; set; }
+
+        public int Height { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
+        public ActivityLevel ActivityLevel { get; set; }
+
+        public decimal DailyCalories { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
