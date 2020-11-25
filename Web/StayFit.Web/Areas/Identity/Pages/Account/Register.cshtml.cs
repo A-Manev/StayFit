@@ -56,8 +56,21 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = this.Input.Username,
+                    Email = this.Input.Email,
+                    FirstName = this.Input.FirstName,
+                    LastName = this.Input.LastName,
+                    CurrentWeight = this.Input.Weight,
+                    Height = this.Input.Height,
+                    Gender = this.Input.Gender,
+                    BirthDate = this.Input.BirthDate,
+                    ActivityLevel = this.Input.ActivityLevel,
+                };
+
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
+
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User created a new account with password.");
