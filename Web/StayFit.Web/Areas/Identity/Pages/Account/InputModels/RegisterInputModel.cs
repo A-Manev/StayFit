@@ -50,6 +50,8 @@
 
         public DateTime BirthDate => DateTime.Parse($"{this.Day} {this.Month} {this.Year}", CultureInfo.InvariantCulture);
 
+        public int Age => DateTime.Now.Year - this.Year;
+
         [Required]
         [Range(1, 31)]
         public int Day { get; set; }

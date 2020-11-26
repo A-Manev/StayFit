@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using StayFit.Data.Models;
+    using StayFit.Services.Data;
     using StayFit.Web.Areas.Identity.Pages.Account.InputModels;
 
     [AllowAnonymous]
@@ -24,17 +25,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
+        private readonly IUsersService userService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUsersService userService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
+            this.userService = userService;
         }
 
         [BindProperty]
@@ -67,7 +71,10 @@
                     Gender = this.Input.Gender,
                     BirthDate = this.Input.BirthDate,
                     ActivityLevel = this.Input.ActivityLevel,
+                    Age = this.Input.Age,
                 };
+
+                user.DailyCalories = this.userService.CalculateUserCalories(user);
 
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
