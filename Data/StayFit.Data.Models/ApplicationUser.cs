@@ -50,6 +50,8 @@ namespace StayFit.Data.Models
 
         public ActivityLevel ActivityLevel { get; set; }
 
+        public WeightLoseGain WeightLoseGain { get; set; }
+
         public double DailyCalories { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }

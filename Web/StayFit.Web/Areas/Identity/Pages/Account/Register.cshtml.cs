@@ -72,6 +72,7 @@
                     BirthDate = this.Input.BirthDate,
                     ActivityLevel = this.Input.ActivityLevel,
                     Age = this.Input.Age,
+                    WeightLoseGain = this.Input.WeightLoseGain,
                 };
 
                 user.DailyCalories = this.userService.CalculateUserCalories(user);

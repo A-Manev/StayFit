@@ -65,6 +65,9 @@
 
         [Display(Name = "How would you describe your normal daily activities?")]
         public ActivityLevel ActivityLevel { get; set; }
+
+        [Display(Name = "What is your goal?")]
+        public WeightLoseGain WeightLoseGain { get; set; }
     }
 
     public class CurrentYearMaxValueAttribute : ValidationAttribute
