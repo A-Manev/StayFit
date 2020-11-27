@@ -5,6 +5,7 @@
     using System.Globalization;
 
     using StayFit.Data.Models.Enums;
+    using StayFit.Web.Infrastructure.CustomAttributes;
 
     public class RegisterInputModel
     {
@@ -68,29 +69,5 @@
 
         [Display(Name = "What is your goal?")]
         public WeightLoseGain WeightLoseGain { get; set; }
-    }
-
-    public class CurrentYearMaxValueAttribute : ValidationAttribute
-    {
-        public CurrentYearMaxValueAttribute(int minYear)
-        {
-            this.MinYear = minYear;
-            this.ErrorMessage = $"Year value should be between: {minYear} and {DateTime.UtcNow.Year}.";
-        }
-
-        public int MinYear { get; }
-
-        public override bool IsValid(object value)
-        {
-            if (value is int intValue)
-            {
-                if (intValue <= DateTime.UtcNow.Year && intValue >= this.MinYear)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
