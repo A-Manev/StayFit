@@ -300,14 +300,14 @@
             var protein = document.QuerySelector("#__next > div.default-layout > main > div.recipe-template > section > div > div.masthead__body > table > tbody:nth-child(4) > tr:nth-child(3) > td.key-value-blocks__value");
             var salt = document.QuerySelector("#__next > div.default-layout > main > div.recipe-template > section > div > div.masthead__body > table > tbody:nth-child(4) > tr:nth-child(4) > td.key-value-blocks__value");
 
-            meal.KCal = decimal.Parse(kcal.TextContent.Trim().Replace("g", string.Empty));
-            meal.Fat = decimal.Parse(fat.TextContent.Trim().Replace("g", string.Empty));
-            meal.Saturates = decimal.Parse(saturates.TextContent.Trim().Replace("g", string.Empty));
-            meal.Carbs = decimal.Parse(carbs.TextContent.Trim().Replace("g", string.Empty));
-            meal.Sugars = decimal.Parse(sugars.TextContent.Trim().Replace("g", string.Empty));
-            meal.Fibre = decimal.Parse(fibre.TextContent.Trim().Replace("g", string.Empty));
-            meal.Protein = decimal.Parse(protein.TextContent.Trim().Replace("g", string.Empty));
-            meal.Salt = decimal.Parse(salt.TextContent.Trim().Replace("g", string.Empty));
+            meal.KCal = double.Parse(kcal.TextContent.Trim().Replace("g", string.Empty));
+            meal.Fat = double.Parse(fat.TextContent.Trim().Replace("g", string.Empty));
+            meal.Saturates = double.Parse(saturates.TextContent.Trim().Replace("g", string.Empty));
+            meal.Carbs = double.Parse(carbs.TextContent.Trim().Replace("g", string.Empty));
+            meal.Sugars = double.Parse(sugars.TextContent.Trim().Replace("g", string.Empty));
+            meal.Fibre = double.Parse(fibre.TextContent.Trim().Replace("g", string.Empty));
+            meal.Protein = double.Parse(protein.TextContent.Trim().Replace("g", string.Empty));
+            meal.Salt = double.Parse(salt.TextContent.Trim().Replace("g", string.Empty));
 
             var preparationTime = document.QuerySelector("#__next > div.default-layout > main > div.recipe-template > section > div > div.masthead__body > ul.masthead__row.masthead__planning.mb-xxs.list.list--horizontal > li:nth-child(1) > div > div.icon-with-text__children > ul > li:nth-child(1) > span:nth-child(2) > time");
 

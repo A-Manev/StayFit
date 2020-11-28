@@ -23,21 +23,21 @@
 
         public string PortionCount { get; set; }
 
-        public decimal KCal { get; set; }
+        public double KCal { get; set; }
 
-        public decimal Fat { get; set; }
+        public double Fat { get; set; }
 
-        public decimal Saturates { get; set; }
+        public double Saturates { get; set; }
 
-        public decimal Carbs { get; set; }
+        public double Carbs { get; set; }
 
-        public decimal Sugars { get; set; }
+        public double Sugars { get; set; }
 
-        public decimal Fibre { get; set; }
+        public double Fibre { get; set; }
 
-        public decimal Protein { get; set; }
+        public double Protein { get; set; }
 
-        public decimal Salt { get; set; }
+        public double Salt { get; set; }
 
         public string Description { get; set; }
 
