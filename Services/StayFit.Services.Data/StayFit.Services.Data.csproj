@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\StayFit.Data.Common\StayFit.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\StayFit.Data.Models\StayFit.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\StayFit.Web.ViewModels\StayFit.Web.ViewModels.csproj" />
     <ProjectReference Include="..\StayFit.Services.Mapping\StayFit.Services.Mapping.csproj" />
   </ItemGroup>
 

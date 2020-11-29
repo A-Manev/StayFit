@@ -1,0 +1,137 @@
+﻿@model StayFit.Web.ViewModels.Meals.CreateMealViewModel
+@{
+    this.ViewData["Title"] = "Craete new meal";
+    var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var subCategoryItems = this.Model.SubCategoriesItems.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+@using StayFit.Data.Models.Enums
+
+<h1>@this.ViewData["Title"]</h1>
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PreparationTime"></label>
+                <input asp-for="PreparationTime" class="form-control" />
+                <span asp-validation-for="PreparationTime" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CookingTime"></label>
+                <input asp-for="CookingTime" class="form-control" />
+                <span asp-validation-for="CookingTime" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SkillLevel"></label>
+                <select asp-for="SkillLevel" class="form-control" asp-items="@Html.GetEnumSelectList<SkillLevel>()">
+                    <option hidden="hidden"> Choose skill level</option>
+                </select>
+                <span asp-validation-for="SkillLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KCal"></label>
+                <input asp-for="KCal" class="form-control" />
+                <span asp-validation-for="KCal" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fat"></label>
+                <input asp-for="Fat" class="form-control" />
+                <span asp-validation-for="Fat" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saturates"></label>
+                <input asp-for="Saturates" class="form-control" />
+                <span asp-validation-for="Saturates" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Carbs"></label>
+                <input asp-for="Carbs" class="form-control" />
+                <span asp-validation-for="Carbs" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sugars"></label>
+                <input asp-for="Sugars" class="form-control" />
+                <span asp-validation-for="Sugars" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Fibre"></label>
+                <input asp-for="Fibre" class="form-control" />
+                <span asp-validation-for="Fibre" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Protein"></label>
+                <input asp-for="Protein" class="form-control" />
+                <span asp-validation-for="Protein" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salt"></label>
+                <input asp-for="Salt" class="form-control" />
+                <span asp-validation-for="Salt" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MethodOfPreparation"></label>
+                <textarea asp-for="MethodOfPreparation" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="MethodOfPreparation" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems">
+                    @*onchange="LoadSubCategories()"*@
+                </select>
+                <span asp-validation-for="CategoryId" class=" text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategoryId"></label>
+                <select asp-for="SubCategoryId" class="form-control" asp-items="subCategoryItems">
+                    <option>All</option>
+                    @*@foreach (var subCategory in Model.SubCategoriesItems)
+                        {
+                            <option value="@subCategory.Id">@subCategory.Name </option>
+                        }*@
+                </select>
+                <span asp-validation-for="SubCategoryId" class=" text-danger"></span>
+            </div>
+
+            <div class="form-group" id="IngredientsContainer">
+                <label asp-for="Ingredients"></label>
+                <a class="btn btn-danger" onclick="AddIngredient()">Add</a>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Create</button>
+</form>
+
+@section Scripts {
+    <script>
+        var ingredientIndex = 0;
+        function AddIngredient() {
+            $("#IngredientsContainer")
+                .append("<div class='form-group'>Quantity and name: <input type='text' name='Ingredients[" + ingredientIndex + "].NameAndQuantity' /></div>");
+            ingredientIndex++;
+        }
+    </script>
+}
+
+@*@section Scripts {
+        <script>
+            var ingredientIndex = 0;
+            function AddIngredient() {
+                $("#IngredientsContainer").
+                    append("<div class='form-control'>Name: <input type='text' name='Ingredients[" + ingredientIndex + "].NameAndQuantity' /></div>");
+                ingredientIndex++;
+            }
+        </script>
+    }*@
