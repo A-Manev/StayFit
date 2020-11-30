@@ -55,13 +55,11 @@
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
-        [Display(Name = " Sub Category")]
-        public int SubCategoryId { get; set; }
+        [Display(Name = "Sub Category")]
+        public string SubCategory { get; set; }
 
         public IEnumerable<MealIngredientInputModel> Ingredients { get; set; }
 
         public IEnumerable<CategoryViewModel> CategoriesItems { get; set; }
-
-        public IEnumerable<SubCategoryViewModel> SubCategoriesItems { get; set; }
     }
 }

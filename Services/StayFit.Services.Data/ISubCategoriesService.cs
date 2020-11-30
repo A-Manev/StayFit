@@ -7,5 +7,7 @@
     public interface ISubCategoriesService
     {
         IEnumerable<SubCategoryViewModel> GetAllSubCategories();
+
+        IEnumerable<SubCategoryViewModel> GetAllSubCategories(int categoryId);
     }
 }

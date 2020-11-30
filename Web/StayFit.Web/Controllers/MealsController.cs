@@ -29,8 +29,6 @@
 
             viewModel.CategoriesItems = this.categoriesService.GetAllCategories();
 
-            viewModel.SubCategoriesItems = this.subCategoriesService.GetAllSubCategories();
-
             return this.View(viewModel);
         }
 
@@ -43,8 +41,6 @@
 
                 viewModel.CategoriesItems = this.categoriesService.GetAllCategories();
 
-                viewModel.SubCategoriesItems = this.subCategoriesService.GetAllSubCategories();
-
                 return this.View(viewModel);
             }
 
@@ -53,6 +49,13 @@
             await this.mealService.CreateAsync(inputModel, user.Id);
 
             return this.Redirect("/");
+        }
+
+        public IActionResult CategorySubCategories(int categoryId)
+        {
+            var subCategories = this.subCategoriesService.GetAllSubCategories(categoryId);
+
+            return this.Json(subCategories);
         }
     }
 }

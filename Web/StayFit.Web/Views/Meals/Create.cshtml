@@ -2,7 +2,6 @@
 @{
     this.ViewData["Title"] = "Craete new meal";
     var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var subCategoryItems = this.Model.SubCategoriesItems.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 @using StayFit.Data.Models.Enums
 
@@ -86,52 +85,29 @@
                 <span asp-validation-for="MethodOfPreparation" class=" text-danger"></span>
             </div>
             <div class="form-group">
-
                 <label asp-for="CategoryId"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems">
-                    @*onchange="LoadSubCategories()"*@
+                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" onchange="LoadSubCategories()">
+                    <option>All</option>
                 </select>
                 <span asp-validation-for="CategoryId" class=" text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SubCategoryId"></label>
-                <select asp-for="SubCategoryId" class="form-control" asp-items="subCategoryItems">
+                <label asp-for="SubCategory"></label>
+                <select asp-for="SubCategory" class="form-control"> 
                     <option>All</option>
-                    @*@foreach (var subCategory in Model.SubCategoriesItems)
-                        {
-                            <option value="@subCategory.Id">@subCategory.Name </option>
-                        }*@
                 </select>
-                <span asp-validation-for="SubCategoryId" class=" text-danger"></span>
+                <span asp-validation-for="SubCategory" class=" text-danger"></span>
             </div>
 
             <div class="form-group" id="IngredientsContainer">
                 <label asp-for="Ingredients"></label>
                 <a class="btn btn-danger" onclick="AddIngredient()">Add</a>
+                @*<div class='form-group'>
+                    Quantity and name: <input type='text' asp-for="Ingredients" />
+                </div>*@
+                <span asp-validation-for="Ingredients" class=" text-danger"></span>
             </div>
         </div>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Create</button>
 </form>
-
-@section Scripts {
-    <script>
-        var ingredientIndex = 0;
-        function AddIngredient() {
-            $("#IngredientsContainer")
-                .append("<div class='form-group'>Quantity and name: <input type='text' name='Ingredients[" + ingredientIndex + "].NameAndQuantity' /></div>");
-            ingredientIndex++;
-        }
-    </script>
-}
-
-@*@section Scripts {
-        <script>
-            var ingredientIndex = 0;
-            function AddIngredient() {
-                $("#IngredientsContainer").
-                    append("<div class='form-control'>Name: <input type='text' name='Ingredients[" + ingredientIndex + "].NameAndQuantity' /></div>");
-                ingredientIndex++;
-            }
-        </script>
-    }*@

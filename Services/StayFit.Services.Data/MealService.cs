@@ -11,35 +11,39 @@
     {
         private readonly IDeletableEntityRepository<Meal> mealRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepository;
+        private readonly IDeletableEntityRepository<SubCategory> subCategoryRepository;
 
-        public MealService(IDeletableEntityRepository<Meal> mealRepository, IDeletableEntityRepository<Ingredient> ingredientRepository)
+        public MealService(IDeletableEntityRepository<Meal> mealRepository, IDeletableEntityRepository<Ingredient> ingredientRepository, IDeletableEntityRepository<SubCategory> subCategoryRepository)
         {
             this.mealRepository = mealRepository;
             this.ingredientRepository = ingredientRepository;
+            this.subCategoryRepository = subCategoryRepository;
         }
 
         public async Task CreateAsync(CreateMealInputModel inputModel, string userId)
         {
+            var subCategoryId = this.subCategoryRepository.AllAsNoTracking().Where(x => x.Name == inputModel.SubCategory).Select(x => x.Id).FirstOrDefault();
+
             var meal = new Meal
             {
-               Name = inputModel.Name,
-               PreparationTime = inputModel.PreparationTime,
-               CookingTime = inputModel.CookingTime,
-               SkillLevel = inputModel.SkillLevel,
-               PortionCount = inputModel.PortionCount,
-               KCal = inputModel.KCal,
-               Fat = inputModel.Fat,
-               Saturates = inputModel.Saturates,
-               Carbs = inputModel.Carbs,
-               Sugars = inputModel.Sugars,
-               Fibre = inputModel.Fibre,
-               Protein = inputModel.Protein,
-               Salt = inputModel.Salt,
-               Description = inputModel.Description,
-               MethodOfPreparation = inputModel.MethodOfPreparation,
-               CategoryId = inputModel.CategoryId,
-               SubCategoryId = inputModel.SubCategoryId,
-               AddedByUserId = userId,
+                Name = inputModel.Name,
+                PreparationTime = inputModel.PreparationTime,
+                CookingTime = inputModel.CookingTime,
+                SkillLevel = inputModel.SkillLevel,
+                PortionCount = inputModel.PortionCount,
+                KCal = inputModel.KCal,
+                Fat = inputModel.Fat,
+                Saturates = inputModel.Saturates,
+                Carbs = inputModel.Carbs,
+                Sugars = inputModel.Sugars,
+                Fibre = inputModel.Fibre,
+                Protein = inputModel.Protein,
+                Salt = inputModel.Salt,
+                Description = inputModel.Description,
+                MethodOfPreparation = inputModel.MethodOfPreparation,
+                CategoryId = inputModel.CategoryId,
+                SubCategoryId = subCategoryId,
+                AddedByUserId = userId,
             };
 
             foreach (var inputIngredient in inputModel.Ingredients)

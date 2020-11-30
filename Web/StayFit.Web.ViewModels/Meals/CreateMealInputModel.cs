@@ -55,9 +55,10 @@
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
-        [Display(Name = " Sub Category")]
-        public int SubCategoryId { get; set; }
+        [Display(Name = "Sub Category")]
+        public string SubCategory { get; set; }
 
+        [Required(ErrorMessage = "You need at least one ingredient.")]
         public IEnumerable<MealIngredientInputModel> Ingredients { get; set; }
     }
 }

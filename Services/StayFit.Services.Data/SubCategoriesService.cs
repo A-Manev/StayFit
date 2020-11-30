@@ -25,5 +25,15 @@
                .OrderBy(x => x.Name)
                .ToList();
         }
+
+        public IEnumerable<SubCategoryViewModel> GetAllSubCategories(int categoryId)
+        {
+            return this.subCategoryRepository
+               .AllAsNoTracking()
+               .Where(x => x.CategoryId == categoryId)
+               .To<SubCategoryViewModel>()
+               .OrderBy(x => x.Name)
+               .ToList();
+        }
     }
 }
