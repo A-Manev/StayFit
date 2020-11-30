@@ -45,6 +45,7 @@
                     {
                         Name = subCategoryDto.Name,
                         Description = subCategoryDto.Description,
+                        Category = category,
                     };
 
                     subCategories.Add(subCategory);
