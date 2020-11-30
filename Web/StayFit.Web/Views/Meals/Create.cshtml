@@ -13,8 +13,8 @@
             <div class="col">
                 <div class="form-row">
                     <div class="col-sm-4 form-group">
-                        <label asp-for="Name"  class="text-primary font-weight-bold"></label>
-                        <input asp-for="Name" class="form-control" placeholder="Enter meal name"/>
+                        <label asp-for="Name" class="text-primary font-weight-bold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter meal name" />
                         <span asp-validation-for="Name" class=" text-danger"></span>
                     </div>
                     <div class="col-sm-2 form-group">
@@ -106,12 +106,19 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="col-sm-6 form-group" id="IngredientsContainer">
+                    <div class="col-sm-3 form-group">
+                        <label asp-for="PortionCount" class="text-primary font-weight-bold"></label>
+                        <input asp-for="PortionCount" class="form-control" />
+                        <span asp-validation-for="PortionCount" class=" text-danger"></span>
+                    </div>
+                    <div class="col-sm-3 form-group" id="IngredientsContainer">
                         <label asp-for="Ingredients" class="text-primary font-weight-bold"></label>
-                        <a class="btn btn-outline-info" onclick="AddIngredient()">Add Ingredient</a>
+                        <div>
+                            <a class="btn btn-outline-info" onclick="AddIngredient()">Add Ingredien</a>
+                        </div>
                         <span asp-validation-for="Ingredients" class=" text-danger"></span>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mt-4">
                         <button type="submit" class="btn btn-primary btn-block">Create</button>
                     </div>
                 </div>
