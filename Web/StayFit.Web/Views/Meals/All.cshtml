@@ -1,0 +1,57 @@
+﻿@model StayFit.Web.ViewModels.Meals.MealListViewModel
+@{
+    this.ViewData["Title"] = "All meals";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+<div class="row">
+    @foreach (var meal in Model.Meals)
+    {
+        <div class="card table-hover col-sm-4 mt-2 ">
+            <img class="img-top img-fluid" src="@meal.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h6 class="card-title row-cols-6 text-truncate">@meal.Name</h6>
+                <div class="table-responsive">
+                    <table class="table text-center table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Calories</th>
+                                <th scope="col">Protein</th>
+                                <th scope="col">Fat</th>
+                                <th scope="col">Carbs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">@meal.KCal g</th>
+                                <td scope="row">@meal.Protein g</td>
+                                <td scope="row">@meal.Fat g</td>
+                                <td scope="row">@meal.Carbs g</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="btn btn-info">More Info</button>
+                <a href="#" class="btn btn-primary text-sm-right float-right">Add to Diary</a>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>

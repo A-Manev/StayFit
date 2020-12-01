@@ -1,10 +1,12 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
+    using StayFit.Services.Mapping;
     using StayFit.Web.ViewModels.Meals;
 
     public class MealService : IMealService
@@ -66,6 +68,22 @@
 
             await this.mealRepository.AddAsync(meal);
             await this.mealRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<MealInListViewModel> GetAll(int page, int itemsPerPage = 15)
+        {
+            return this.mealRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<MealInListViewModel>()
+                .ToList();
+        }
+
+        public int GetAllMealsCount()
+        {
+            return this.mealRepository.AllAsNoTracking().Count();
         }
     }
 }

@@ -127,7 +127,7 @@
 
                     var image = new Image
                     {
-                        Extension = meal.ImageUrl,
+                        RemoteImageUrl = meal.ImageUrl,
                         MealId = newMeal.Id,
                     };
 

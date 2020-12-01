@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
@@ -23,6 +24,7 @@
             this.mealService = mealService;
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             var viewModel = new CreateMealViewModel();
@@ -33,6 +35,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreateMealInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
@@ -56,6 +59,20 @@
             var subCategories = this.subCategoriesService.GetAllSubCategories(categoryId);
 
             return this.Json(subCategories);
+        }
+
+        public IActionResult All(int id = 1)
+        {
+            const int ItemsPerPage = 15;
+            var viewModel = new MealListViewModel
+            {
+                PageNumber = id,
+                MealsCount = this.mealService.GetAllMealsCount(),
+                Meals = this.mealService.GetAll(id),
+                ItemsPerPage = ItemsPerPage,
+            };
+
+            return this.View(viewModel);
         }
     }
 }
