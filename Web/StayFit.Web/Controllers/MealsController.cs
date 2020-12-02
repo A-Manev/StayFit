@@ -63,6 +63,11 @@
 
         public IActionResult All(int id = 1)
         {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
             const int ItemsPerPage = 15;
             var viewModel = new MealListViewModel
             {

@@ -2,14 +2,10 @@
 {
     using System.Collections.Generic;
 
-    public class MealListViewModel
+    using StayFit.Web.ViewModels.Pages;
+
+    public class MealListViewModel : PagingViewModel
     {
         public IEnumerable<MealInListViewModel> Meals { get; set; }
-
-        public int PageNumber { get; set; }
-
-        public int MealsCount { get; set; }
-
-        public int ItemsPerPage { get; set; }
     }
 }
