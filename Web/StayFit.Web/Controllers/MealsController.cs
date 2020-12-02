@@ -1,8 +1,10 @@
 ﻿namespace StayFit.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
@@ -15,13 +17,15 @@
         private readonly ICategoriesService categoriesService;
         private readonly ISubCategoriesService subCategoriesService;
         private readonly IMealService mealService;
+        private readonly IWebHostEnvironment environment;
 
-        public MealsController(UserManager<ApplicationUser> userManager, ICategoriesService categoriesService, ISubCategoriesService subCategoriesService, IMealService mealService)
+        public MealsController(UserManager<ApplicationUser> userManager, ICategoriesService categoriesService, ISubCategoriesService subCategoriesService, IMealService mealService, IWebHostEnvironment environment)
         {
             this.userManager = userManager;
             this.categoriesService = categoriesService;
             this.subCategoriesService = subCategoriesService;
             this.mealService = mealService;
+            this.environment = environment;
         }
 
         [Authorize]
@@ -38,10 +42,10 @@
         [Authorize]
         public async Task<IActionResult> Create(CreateMealInputModel inputModel)
         {
+            var viewModel = new CreateMealViewModel();
+
             if (!this.ModelState.IsValid)
             {
-                var viewModel = new CreateMealViewModel();
-
                 viewModel.CategoriesItems = this.categoriesService.GetAllCategories();
 
                 return this.View(viewModel);
@@ -49,7 +53,18 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.mealService.CreateAsync(inputModel, user.Id);
+            try
+            {
+                await this.mealService.CreateAsync(inputModel, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception exception)
+            {
+                this.ModelState.AddModelError(string.Empty, exception.Message);
+
+                viewModel.CategoriesItems = this.categoriesService.GetAllCategories();
+
+                return this.View(viewModel);
+            }
 
             return this.Redirect("/");
         }

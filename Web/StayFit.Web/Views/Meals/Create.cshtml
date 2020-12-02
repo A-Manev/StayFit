@@ -8,9 +8,10 @@
 <h1>@this.ViewData["Title"]</h1>
 
 <div class="form container">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-row">
                     <div class="col-sm-4 form-group">
                         <label asp-for="Name" class="text-primary font-weight-bold"></label>
@@ -118,9 +119,14 @@
                         </div>
                         <span asp-validation-for="Ingredients" class=" text-danger"></span>
                     </div>
-                    <div class="col-sm-6 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">Create</button>
+                    <div class="form-group">
+                        <label asp-for="Images"></label>
+                        <input asp-for="Images" class="form-control" />
+                        <span asp-validation-for="Images" class=" text-danger"></span>
                     </div>
+                </div>
+                <div class="col-sm-6 mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Create</button>
                 </div>
             </div>
         </div>

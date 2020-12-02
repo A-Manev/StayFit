@@ -1,6 +1,7 @@
 ﻿namespace StayFit.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Services;
@@ -9,17 +10,19 @@
     public class HomeController : BaseController
     {
         private readonly IExerciseScraperService scraperService;
+        private readonly IMealScraperService mealService;
 
-        public HomeController(IExerciseScraperService scraperService)
+        public HomeController(IExerciseScraperService scraperService, IMealScraperService mealService)
         {
             this.scraperService = scraperService;
+            this.mealService = mealService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             // Move to administration area.
-            this.scraperService.PopulateDbWithExercises(2);
-
+            // await this.mealService.PopulateDbWithMeal(2);
+           // await this.scraperService.PopulateDbWithExercises(100);
             return this.View();
         }
 
