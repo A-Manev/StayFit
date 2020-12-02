@@ -1,6 +1,8 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@
 
     public class MealService : IMealService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "png" };
         private readonly IDeletableEntityRepository<Meal> mealRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepository;
         private readonly IDeletableEntityRepository<SubCategory> subCategoryRepository;
@@ -22,7 +25,7 @@
             this.subCategoryRepository = subCategoryRepository;
         }
 
-        public async Task CreateAsync(CreateMealInputModel inputModel, string userId)
+        public async Task CreateAsync(CreateMealInputModel inputModel, string userId, string imagePath)
         {
             var subCategoryId = this.subCategoryRepository.AllAsNoTracking().Where(x => x.Name == inputModel.SubCategory).Select(x => x.Id).FirstOrDefault();
 
@@ -64,6 +67,29 @@
                 {
                     Ingredient = ingredient,
                 });
+            }
+
+            Directory.CreateDirectory($"{imagePath}/meals/");
+
+            foreach (var image in inputModel.Images)
+            {
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
+
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var newImage = new Image
+                {
+                    AddedByUserId = userId,
+                    Extension = extension,
+                };
+
+                meal.Images.Add(newImage);
+                var physicalPath = $"{imagePath}/meals/{newImage.Id}.{extension}";
+                using var fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
             }
 
             await this.mealRepository.AddAsync(meal);

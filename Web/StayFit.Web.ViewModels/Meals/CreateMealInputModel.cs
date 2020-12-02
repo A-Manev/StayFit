@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
     using StayFit.Data.Models;
     using StayFit.Data.Models.Enums;
     using StayFit.Services.Mapping;
@@ -18,6 +19,9 @@
 
         [Required]
         public string CookingTime { get; set; }
+
+        [Required(ErrorMessage = "Add at least one image.")]
+        public IEnumerable<IFormFile> Images { get; set; }
 
         [Required]
         [Display(Name = "Skill level")]
@@ -62,9 +66,11 @@
         [Display(Name = "Method of preparation step by step")]
         public string MethodOfPreparation { get; set; }
 
+        [Required]
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
+        [Required]
         [Display(Name = "Subcategory")]
         public string SubCategory { get; set; }
 

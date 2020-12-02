@@ -7,7 +7,7 @@
 
     public interface IMealService
     {
-        Task CreateAsync(CreateMealInputModel inputModel, string userId);
+        Task CreateAsync(CreateMealInputModel inputModel, string userId, string imagePath);
 
         IEnumerable<MealInListViewModel> GetAll(int page, int itemsPerPage = 15);
 

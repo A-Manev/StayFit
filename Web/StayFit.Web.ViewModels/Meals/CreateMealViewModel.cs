@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
     using StayFit.Data.Models.Enums;
     using StayFit.Web.ViewModels.Categories;
 
@@ -17,6 +18,9 @@
 
         [Required]
         public string CookingTime { get; set; }
+
+        [Required(ErrorMessage = "Add at least one image.")]
+        public IEnumerable<IFormFile> Images { get; set; }
 
         [Required]
         [Display(Name = "Skill level")]
