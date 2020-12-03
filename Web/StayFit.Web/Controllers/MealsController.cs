@@ -94,5 +94,12 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult MealDetails(int id)
+        {
+            var viewModel = this.mealService.GetMealDetails(id);
+
+            return this.View(viewModel);
+        }
     }
 }

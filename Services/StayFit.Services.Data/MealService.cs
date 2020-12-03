@@ -111,5 +111,12 @@
         {
             return this.mealRepository.AllAsNoTracking().Count();
         }
+
+        public MealDetailsViewModel GetMealDetails(int mealId)
+        {
+            return this.mealRepository.AllAsNoTracking().Where(x => x.Id == mealId)
+                .To<MealDetailsViewModel>()
+                .FirstOrDefault();
+        }
     }
 }

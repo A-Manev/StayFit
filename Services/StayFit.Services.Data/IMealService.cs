@@ -12,5 +12,7 @@
         IEnumerable<MealInListViewModel> GetAll(int page, int itemsPerPage = 15);
 
         int GetAllMealsCount();
+
+        MealDetailsViewModel GetMealDetails(int mealId);
     }
 }

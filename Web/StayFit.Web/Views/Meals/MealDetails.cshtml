@@ -1,0 +1,129 @@
+﻿@model StayFit.Web.ViewModels.Meals.MealDetailsViewModel
+@{
+    this.ViewData["Title"] = "Meal Details";
+}
+
+<h3> @Model.CategoryName <i class="fas fa-greater-than"></i>  @Model.SubCategoryName</h3>
+
+<div class="container">
+    <div class="row rounded" style="background-color: #f0f0f0">
+        <div class="col-sm-4">
+            <img src="@Model.ImageUrl" class="img-fluid m-2 mt-4" alt="..." @*width="200"*@>
+            <div class="form-row m-2">
+                <div class="col-md-6">
+                    <i class="fas fa-calendar-alt">
+                        @Model.CreatedOn.ToShortDateString()
+                    </i>
+                </div>
+                <div class="col-md-6">
+                    <i class="fas fa-star" style="color:orange"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 1/5.0
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="form-row m-4">
+                <h3>@Model.Name</h3>
+            </div>
+            <div class="form-row">
+                <ul style="list-style-type: none;">
+                    <li>
+                        <i class="fas fa-user fa-lg"></i>
+                        <strong> By </strong>
+                        @if (string.IsNullOrWhiteSpace(Model.AddedByUserUserName))
+                        {
+                            <a href="https://www.bbcgoodfood.com/" target="_blank">www.bbcgoodfood.com</a>
+                        }
+                        else
+                        {
+                            <label class="mb-3">@Model.AddedByUserUserName</label>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="form-row">
+                <div class="col-md-5">
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <i class="fa fa-clock fa-lg" style="color:darkcyan"></i>
+                        </li>
+                        <li>
+                            <strong>Prep Time: </strong>@Model.PreparationTime
+                        </li>
+                        <li>
+                            <strong>Cook Time: </strong>@Model.CookingTime
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <i class="fas fa-mortar-pestle fa-lg" style="color:darkcyan"></i>
+                        </li>
+                        <li>
+                            <strong>@Model.SkillLevel</strong>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <i class="fas fa-utensils fa-lg" style="color:darkcyan"></i>
+                        </li>
+                        <li>
+                            <strong> @Model.PortionCount </strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-row">
+                <p>@Model.Description</p>
+            </div>
+            <div class="form-row">
+                <strong>Nutrition: per serving</strong>
+            </div>
+            <div class="form-row">
+                <div class="col-md-9">
+                    <table class="table table-responsive text-center table-borderless" style="background-color:rgba(114,174,178,.25);" @*style="padding: 50px;"*@>
+                        <thead @*class="thead-dark"*@>
+                            <tr>
+                                <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Calories</th>
+                                <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Protein</th>
+                                <th class="" scope="col">Fat</th>
+                                <th class="" scope="col">Saturates</th>
+                                <th class="" scope="col">Sugars</th>
+                                <th class="" scope="col">Fibre</th>
+                                <th class="" scope="col">Salt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">@Model.KCal<text>kcal</text></th>
+                                <td scope="row">@Model.Protein<text>g</text></td>
+                                <td scope="row">@Model.Fat<text>g</text></td>
+                                <td scope="row">@Model.Saturates<text>g</text></td>
+                                <td scope="row">@Model.Sugars<text>g</text></td>
+                                <td scope="row">@Model.Fibre<text>g</text></td>
+                                <td scope="row">@Model.Salt<text>g</text></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h3>Ingredients</h3>
+            @foreach (var item in Model.Ingredients)
+            {
+                <p>@item.IngredientNameAndQuantity</p>
+            }
+        </div>
+        <div class="col-md-6">
+            <h3>Method of preparation</h3>
+            <p>@Model.MethodOfPreparation</p>
+        </div>
+    </div>
+</div>
+

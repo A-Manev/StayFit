@@ -8,34 +8,36 @@
 <div class="row">
     @foreach (var meal in Model.Meals)
     {
-        <div class="card table-hover col-sm-4 mt-2 ">
-            <img class="img-top img-fluid" src="@meal.ImageUrl" alt="Card image cap">
-            <div class="card-body">
-                <h6 class="card-title row-cols-6 text-truncate">@meal.Name</h6>
-                <div class="table-responsive">
-                    <table class="table text-center table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Calories</th>
-                                <th scope="col">Protein</th>
-                                <th scope="col">Fat</th>
-                                <th scope="col">Carbs</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">@meal.KCal g</th>
-                                <td scope="row">@meal.Protein g</td>
-                                <td scope="row">@meal.Fat g</td>
-                                <td scope="row">@meal.Carbs g</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="card col-sm-4 mt-2 p-3">
+            <a asp-action="MealDetails" asp-route-id="@meal.Id">
+                <img class="img-top img-fluid rounded" src="@meal.ImageUrl" alt="Card image cap">
+            </a>
+                <div class="card-body">
+                    <h6 class="card-title row-cols-6 text-truncate"><a asp-action="MealDetails" asp-route-id="@meal.Id">@meal.Name</a></h6>
+                    <div class="table-responsive">
+                        <table class="table text-center table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Calories</th>
+                                    <th scope="col">Protein</th>
+                                    <th scope="col">Fat</th>
+                                    <th scope="col">Carbs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">@meal.KCal<text>kcal</text></th>
+                                    <td scope="row">@meal.Protein<text>g</text></td>
+                                    <td scope="row">@meal.Fat<text>g</text></td>
+                                    <td scope="row">@meal.Carbs<text>g</text></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-info">More Info</button>
+                    <a href="#" class="btn btn-primary text-sm-right float-right">Add to Diary</a>
                 </div>
-                <button type="button" class="btn btn-info">More Info</button>
-                <a href="#" class="btn btn-primary text-sm-right float-right">Add to Diary</a>
-            </div>
-        </div>
+</div>
     }
 </div>
 <hr />
