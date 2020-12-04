@@ -11,6 +11,8 @@
 
     public class MealDetailsViewModel : IMapFrom<Meal>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string ImageUrl { get; set; }
@@ -51,11 +53,15 @@
 
         public string SubCategoryName { get; set; }
 
+        public double AverageVote { get; set; }
+
         public IEnumerable<IngredientsViewModel> Ingredients { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Meal, MealDetailsViewModel>()
+                 .ForMember(x => x.AverageVote, opt =>
+                    opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(v => v.Value)))
                 .ForMember(x => x.ImageUrl, opt =>
                   opt.MapFrom(x =>
                    x.Images.FirstOrDefault().RemoteImageUrl != null ?

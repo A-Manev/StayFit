@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true"/>
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
 </head>
@@ -56,6 +57,7 @@
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script src="~/js/LoadSubCategories.js" asp-append-version="true"></script>
     <script src="~/js/AddIngredient.js" asp-append-version="true"></script>
+    <script src="~/js/stars.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
