@@ -1,0 +1,476 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExercisesListViewModel
+@{
+    this.ViewData["Title"] = "All Exercises";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @*@for (int i = 0; i < 50; i++)
+        {
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1"></label>
+            </div>
+        }*@
+        @*<div class="ExCategory-finder">
+            <button class="bb-flat-btn ExCategory-finderBtn js-ex-finder-menu-btn">
+                Filter Exercises
+            </button>
+            <form name="finderForm" class="ExCategory-form js-ex-finder-menu-menu">
+                <div class="flexo-container">
+                    <div class="grid-12 grid-12-s grid-6-m">
+                        <section class="ExCategory-formSection">
+                            <h4 class="ExHeading ExCategory-formHeading">
+                                Muscles
+                            </h4>
+                            <ul class="bb-list--plain ExCategory-formOptions">
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="chest" onclick="EcerxiseFinder()">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Chest
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="forearms">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Forearms
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="lats">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Lats
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="middle-back">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Middle Back
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="lower-back">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Lower Back
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="neck">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Neck
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="quadriceps">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Quadriceps
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="hamstrings">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Hamstrings
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="calves">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Calves
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="triceps">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Triceps
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="traps">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Traps
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="shoulders">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Shoulders
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="abdominals">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Abdominals
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="glutes">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Glutes
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="biceps">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Biceps
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="adductors">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Adductors
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="muscle[]" value="abductors">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Abductors
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="grid-12 grid-12-s grid-6-m">
+                        <section class="ExCategory-formSection">
+                            <h4 class="ExHeading ExCategory-formHeading">
+                                Exercise Type
+                            </h4>
+                            <ul class="bb-list--plain ExCategory-formOptions">
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="cardio">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Cardio
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="olympic-weightlifting">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Olympic Weightlifting
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="plyometrics">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Plyometrics
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="powerlifting">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Powerlifting
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="strength">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Strength
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="stretching">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Stretching
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="exercise-type[]" value="strongman">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Strongman
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="grid-12 grid-12-s grid-6-m">
+                        <section class="ExCategory-formSection">
+                            <h4 class="ExHeading ExCategory-formHeading">
+                                Equipment
+                            </h4>
+                            <ul class="bb-list--plain ExCategory-formOptions">
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="bands">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Bands
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="foam-roll">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Foam Roll
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="barbell">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Barbell
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="kettlebells">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Kettlebells
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="body-only">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Body Only
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="machine">-
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Machine
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="cable">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Cable
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="medicine-ball">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Medicine Ball
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="dumbbell">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Dumbbell
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="none">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            None
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="ez-curl-bar">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            E-Z Curl Bar
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="other">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Other
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="equipment[]" value="exercise-ball">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Exercise Ball
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="grid-12 grid-12-s grid-6-m">
+                        <section class="ExCategory-formSection">
+                            <h4 class="ExHeading ExCategory-formHeading">
+                                Mechanics Type
+                            </h4>
+                            <ul class="bb-list--plain ExCategory-formOptions">
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="mechanics-type[]" value="compound">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Compound
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="mechanics-type[]" value="isolation">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Isolation
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="mechanics-type[]" value="not-available">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            N/A
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="grid-12 grid-12-s grid-6-m">
+                        <section class="ExCategory-formSection">
+                            <h4 class="ExHeading ExCategory-formHeading">
+                                Level
+                            </h4>
+                            <ul class="bb-list--plain ExCategory-formOptions">
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="level[]" value="beginner">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Beginner
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="level[]" value="intermediate">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Intermediate
+                                        </span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="ExCategory-formLabel">
+                                        <input type="checkbox" class="ExCategory-formCheckbox js-ex-finder" name="level[]" value="expert">
+                                        <span class="ExCategory-formCheckboxGoodLooking"></span>
+                                        <span class="ExCategory-formLabelLabel">
+                                            Expert
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </form>
+        </div>*@
+
+    </div>
+    <div class="col-md-8">
+        @foreach (var exercise in Model.Exercises)
+        {
+            <div class="media border mt-1">
+                <a asp-action="Details" asp-route-id="@exercise.Id">
+                    <img class="align-self-center mr-3 img-fluid" width="185" src="@exercise.ImageUrl" alt="@exercise.Name">
+                </a>
+                <div class="media-body">
+                    <h5 class="mt-0"><a asp-action="Details" asp-route-id="@exercise.Id">@exercise.Name</a></h5>
+                    <p>Muscle Targeted: @exercise.BodyPart</p>
+                    <p>Equipment Type: @exercise.EquipmentName</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<hr />
+<partial name="_PagingPartial" model="@Model" />

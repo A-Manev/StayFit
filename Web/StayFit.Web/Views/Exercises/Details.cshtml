@@ -1,0 +1,87 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExerciseDetailsViewModel
+@{
+    this.ViewData["Title"] = "Details Page";
+}
+
+@*Partial view with more info for targeted muscle*@
+
+<div class="container">
+    <div class="row rounded" style="background-color: #f0f0f0">
+        <div class="col-md-5">
+            <img class="m-2 mt-3 rounded img-fluid" src="@Model.ImageUrl" alt="@Model.Name" width="400">
+            <div class="form-row"></div>
+        </div>
+        <div class="col-md-7">
+            <h2>@Model.Name</h2>
+            <p>@Model.Description</p>
+            <p>
+                @if (Model.Benefits != null)
+                {
+                    <strong>Benefits</strong>
+                    @for (int i = 0; i < Model.Benefits.Length; i++)
+                    {
+                        if (char.IsUpper(Model.Benefits[i]))
+                        {
+                            <br>
+                            <i class="fas fa-check fa-lg" style="color:green"></i>
+                        }
+
+                        @Model.Benefits[i]
+                    }
+                }
+            </p>
+            <div class="form-row"><p class=""><strong>Type:</strong> @Model.ExerciseType</p></div>
+            <div class="form-row"><p class=""><strong>Main Muscle Worked:</strong> @Model.BodyPart</p></div>
+            <div class="form-row"><p class=""><strong>Equipment:</strong> @Model.EquipmentName</p></div>
+            <div class="form-row"><p class=""><strong>Level:</strong> @Model.Difficulty</p></div>
+        </div>
+    </div>
+    @if (Model.BodyPart.ToString() == "Chest")
+    {
+        <div class="row mt-3">
+            <div class="col-md-5">
+                <img class="m-2 rounded" src="https://static1.squarespace.com/static/55c94945e4b0d0102708ba6b/55d4c0aae4b0dc45ceec1c73/589373d303596e0c36b8e651/1497108340560/Pectoralis-major.png?format=1500w" alt="@Model.Name" width="400">
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <strong>PECTORALIS: </strong>There are two
+                    pectoralis muscles (pecs
+                    for short) located on your
+                    chest: the pectoralis major
+                    and the pectoralis minor.
+                    The pectoralis major can be
+                    divided into two heads: the
+                    clavicular head or “upper
+                    chest” (which originates at
+                    the clavicle) and the sternal
+                    head or “lower chest” (which
+                    originates at the sternum).
+                    The pecs act to adduct the
+                    upper arm (bring the upper arm across the body), and to internally rotate the
+                    shoulder joint. The clavicular fibers also aid in shoulder flexion (raising your upper
+                    arm up), but the sternal fibers do not.
+                </p>
+
+                <p>
+                    <strong>
+                        ORIGIN:
+                    </strong> The pectoralis major originates on the sternum and clavicle. The
+                    pectoralis minor originates on the 3rd-5th ribs.
+                </p>
+                <p>
+                    <strong>
+                        INSERTION:
+                    </strong> The pectoralis major inserts on the humerus. The pectoralis minor
+                    inserts to the coracoid process (front of your shoulder).
+                </p>
+                <p>
+                    <strong>
+                        EXERCISES:
+                    </strong> Barbell bench press, decline bench press, dip, dumbbell incline press,
+                    low incline dumbbell press, low to high cable flye, and push up
+                </p>
+            </div>
+        </div>
+    }
+
+</div>
