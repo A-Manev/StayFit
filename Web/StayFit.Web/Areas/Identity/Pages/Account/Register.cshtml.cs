@@ -77,6 +77,8 @@
 
                 user.DailyCalories = this.userService.CalculateUserCalories(user);
 
+                user.RemainingCalories = user.DailyCalories;
+
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
                 if (result.Succeeded)

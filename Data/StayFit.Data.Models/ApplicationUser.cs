@@ -54,6 +54,8 @@ namespace StayFit.Data.Models
 
         public double DailyCalories { get; set; }
 
+        public double RemainingCalories { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

@@ -1,4 +1,5 @@
-﻿@using StayFit.Common
+﻿@model StayFit.Web.ViewModels.Users.HomePageUserViewModel
+@using StayFit.Common
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -7,3 +8,84 @@
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="form container">
+        <form method="post" class="border border p-2 rounded mx-auto d-block">
+            <div class="card-header text-white py-2" style=" background: #9c4be6">
+                <div class="row">
+                    <div class="col">
+                        <strong>
+                            <i class="fas fa-tasks"></i>
+                            Your Daily Summary
+                        </strong>
+                    </div>
+                    <div class="col-sm text-right">
+                        <strong>1 DAY STREAK</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-2">
+                    <img class="rounded-circle img-fluid" src="">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <h6><strong>6</strong></h6>kg
+                            GAINED
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fas fa-weight fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h5 class="text-muted">Calories Remaining</h5>
+                    <div class="form-row">
+                        <div class="col">
+                            <h1 class="text-success">
+                                <strong id="caloriesRemaining">@Math.Round(Model.RemainingCalories)</strong>
+                            </h1>
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-secondary">Add Exercise</button>
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="btn btn-outline-secondary">Add Food</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-row">
+                        <div class="col-md-2 border-right">
+                            <div class="form-row"><span class="text-muted" id="goalCalories">@Math.Round(Model.DailyCalories)</span></div>
+                            <div class="form-row"><span class="text-muted">GOAL</span></div>
+                        </div>
+
+                        <div class="col ml-5">
+                            <div class="form-row"><span class="text-muted">@Math.Round(Model.EatenFood)</span></div>
+                            <div class="form-row"><span class="text-muted">FOOD</span></div>
+                        </div>
+                        <div class="col">
+                            <div class="form-row"><span class="text-muted">-</span></div>
+                        </div>
+                        <div class="col">
+                            <div class="form-row"><span class="text-muted">0</span></div>
+                            <div class="form-row"><span class="text-muted">EXERCISE</span></div>
+                        </div>
+                        <div class="col">
+                            <div class="form-row"><span class="text-muted">=</span></div>
+                        </div>
+                        <div class="col">
+                            <div class="form-row"><span class="text-muted">0</span></div>
+                            <div class="form-row"><span class="text-muted">NET</span></div>
+                        </div>
+                    </div>
+
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
