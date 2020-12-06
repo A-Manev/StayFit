@@ -1,10 +1,13 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
+    using StayFit.Services.Mapping;
+    using StayFit.Web.ViewModels.Diaries;
 
     public class DiariesService : IDiariesService
     {
@@ -19,7 +22,7 @@
             this.mealRepository = mealRepository;
         }
 
-        public async Task AddMealToDiary(int mealId, string userId, double quantity = 1)
+        public async Task AddMealToDiaryAsync(int mealId, string userId, double quantity = 1)
         {
             var user = this.userRepository.All().Where(x => x.Id == userId).FirstOrDefault();
             var meal = this.mealRepository.AllAsNoTracking().Where(x => x.Id == mealId).FirstOrDefault();
@@ -36,6 +39,28 @@
             await this.mealsDiaryRepository.AddAsync(mealDiary);
             await this.mealsDiaryRepository.SaveChangesAsync();
             await this.userRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<FoodDiaryViewModel> GetUserFoodDiary(string userId)
+        {
+            return this.mealsDiaryRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .To<FoodDiaryViewModel>()
+                .ToList();
+
+            //return this.mealsDiaryRepository.All()
+            //    .Where(x => x.UserId == userId)
+            //    .Select(x => new MealDiaryViewModel
+            //    {
+            //        Id = x.Meal.Id,
+            //        Name = x.Meal.Name,
+            //        KCal = x.Meal.KCal,
+            //        Protein = x.Meal.Protein,
+            //        Fat = x.Meal.Fat,
+            //        Carbs = x.Meal.Carbs,
+            //    })
+            //    .ToList();
         }
     }
 }

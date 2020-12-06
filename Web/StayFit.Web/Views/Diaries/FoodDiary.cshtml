@@ -1,0 +1,60 @@
+﻿@model ICollection<StayFit.Web.ViewModels.Diaries.FoodDiaryViewModel>
+@{
+    this.ViewData["Title"] = "Your Food Diary";
+}
+
+<h1>@this.ViewData["Title"] for @DateTime.UtcNow.ToShortDateString()</h1>
+
+@{
+    var totalCalories = 0.0;
+    var totalProtein = 0.0;
+    var totalFat = 0.0;
+    var totalCarbs = 0.0;
+}
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Carbs</th>
+                <th scope="col">Fat</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in Model)
+            {
+                totalCalories += meal.MealKCal * meal.MealQuantity;
+                totalProtein += meal.MealProtein * meal.MealQuantity;
+                totalCarbs += meal.MealCarbs * meal.MealQuantity;
+                totalFat += meal.MealFat * meal.MealQuantity;
+
+                <tr>
+                    <th scope="row">@meal.MealName , @meal.MealQuantity</th>
+                    <td>@(meal.MealKCal * meal.MealQuantity)</td>
+                    <td>@(meal.MealProtein * meal.MealQuantity)</td>
+                    <td>@(meal.MealCarbs * meal.MealQuantity)</td>
+                    <td>@(meal.MealFat * meal.MealQuantity)</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@meal.Id">
+                            <i class="fas fa-minus-circle" style="color:red"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+            <tr style="background-color:aquamarine">
+                <th scope="row">Total:</th>
+                <td scope="row">@totalCalories</td>
+                <td scope="row">@totalProtein</td>
+                <td scope="row">@totalCarbs</td>
+                <td scope="row">@totalFat</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="/Meals/All" role="button">Add Food</a>
+</div>

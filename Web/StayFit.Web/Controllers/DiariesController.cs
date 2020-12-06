@@ -24,9 +24,19 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.diariesService.AddMealToDiary(id, user.Id, 1);
+            await this.diariesService.AddMealToDiaryAsync(id, user.Id, 1);
 
             return this.Redirect("/");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> FoodDiary()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var viewModel = this.diariesService.GetUserFoodDiary(user.Id);
+
+            return this.View(viewModel);
         }
     }
 }
