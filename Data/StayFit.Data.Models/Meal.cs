@@ -14,6 +14,7 @@
             this.Users = new HashSet<UserMeal>();
             this.Comments = new HashSet<Comment>();
             this.Ingredients = new HashSet<MealIngredient>();
+            this.UsersMealsDiary = new HashSet<MealDiary>();
         }
 
         public string Name { get; set; }
@@ -69,5 +70,7 @@
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<MealIngredient> Ingredients { get; set; }
+
+        public virtual ICollection<MealDiary> UsersMealsDiary { get; set; }
     }
 }

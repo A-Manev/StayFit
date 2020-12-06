@@ -21,6 +21,8 @@ namespace StayFit.Data.Models
             this.UserMeal = new HashSet<UserMeal>();
             this.Votes = new HashSet<Vote>();
             this.Comments = new HashSet<Comment>();
+            this.AddedByUserMeals = new HashSet<Meal>();
+            this.MealsDiary = new HashSet<MealDiary>();
         }
 
         // Audit info
@@ -71,5 +73,7 @@ namespace StayFit.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Meal> AddedByUserMeals { get; set; }
+
+        public virtual ICollection<MealDiary> MealsDiary { get; set; }
     }
 }
