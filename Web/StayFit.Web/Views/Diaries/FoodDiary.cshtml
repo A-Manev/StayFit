@@ -48,10 +48,10 @@
 
             <tr style="background-color:aquamarine">
                 <th scope="row">Total:</th>
-                <td scope="row">@totalCalories</td>
-                <td scope="row">@totalProtein</td>
-                <td scope="row">@totalCarbs</td>
-                <td scope="row">@totalFat</td>
+                <td scope="row">@Math.Round(totalCalories, 2)</td>
+                <td scope="row">@Math.Round(totalProtein, 2)</td>
+                <td scope="row">@Math.Round(totalCarbs, 2)</td>
+                <td scope="row">@Math.Round(totalFat, 2)</td>
             </tr>
         </tbody>
     </table>

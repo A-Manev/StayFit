@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
     using StayFit.Services.Data;
+    using StayFit.Web.ViewModels.Diaries;
 
     public class DiariesController : Controller
     {
@@ -20,11 +21,11 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Add(int id/*, double quantity*/)
+        public async Task<IActionResult> Add(int mealId, double quantity)
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.diariesService.AddMealToDiaryAsync(id, user.Id, 1);
+            await this.diariesService.AddMealToDiaryAsync(mealId, user.Id, quantity);
 
             return this.Redirect("/");
         }
@@ -34,7 +35,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            var viewModel = this.diariesService.GetUserFoodDiary(user.Id);
+            var viewModel = this.diariesService.GetUserFoodDiary<FoodDiaryViewModel>(user.Id);
 
             return this.View(viewModel);
         }
