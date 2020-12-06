@@ -12,6 +12,6 @@
 
         public virtual ApplicationUser User { get; set; }
 
-        public decimal MealQuantity { get; set; }
+        public double MealQuantity { get; set; }
     }
 }
