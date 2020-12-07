@@ -1,5 +1,6 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -23,8 +24,15 @@
 
         public async Task AddMealToDiaryAsync(int mealId, string userId, double quantity)
         {
-            var user = this.userRepository.All().Where(x => x.Id == userId).FirstOrDefault();
-            var meal = this.mealRepository.AllAsNoTracking().Where(x => x.Id == mealId).FirstOrDefault();
+            var user = this.userRepository
+                .All()
+                .Where(x => x.Id == userId)
+                .FirstOrDefault();
+
+            var meal = this.mealRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == mealId)
+                .FirstOrDefault();
 
             user.RemainingCalories -= meal.KCal * quantity;
 
@@ -40,11 +48,38 @@
             await this.userRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetUserFoodDiary<T>(string userId)
+        public async Task DeleteMealFromDiaryAsync(int id, string userId)
+        {
+            var user = this.userRepository
+                .All()
+                .Where(x => x.Id == userId)
+                .FirstOrDefault();
+
+            var currentMealInDiary = this.mealsDiaryRepository
+                .All()
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+
+            var meal = this.mealRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == currentMealInDiary.MealId)
+                .FirstOrDefault();
+
+            if (currentMealInDiary.CreatedOn.Date == DateTime.UtcNow.Date)
+            {
+                user.RemainingCalories += meal.KCal * currentMealInDiary.MealQuantity;
+            }
+
+            this.mealsDiaryRepository.Delete(currentMealInDiary);
+
+            await this.userRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetUserFoodDiary<T>(string userId, DateTime date)
         {
             return this.mealsDiaryRepository
                 .All()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.CreatedOn.Date == date.Date)
                 .To<T>()
                 .ToList();
         }

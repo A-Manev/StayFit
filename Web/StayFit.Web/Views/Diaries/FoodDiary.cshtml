@@ -1,9 +1,10 @@
-﻿@model ICollection<StayFit.Web.ViewModels.Diaries.FoodDiaryViewModel>
+﻿@model StayFit.Web.ViewModels.Diaries.FoodDiaryListViewModel
+
 @{
     this.ViewData["Title"] = "Your Food Diary";
 }
 
-<h1>@this.ViewData["Title"] for @DateTime.UtcNow.ToShortDateString()</h1>
+<h1>@this.ViewData["Title"] for @Model.CurrentDate.ToShortDateString()</h1>
 
 @{
     var totalCalories = 0.0;
@@ -16,7 +17,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Name and Quantity</th>
                 <th scope="col">Calories</th>
                 <th scope="col">Protein</th>
                 <th scope="col">Carbs</th>
@@ -25,19 +26,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var meal in Model)
+            @foreach (var meal in Model.Diary)
             {
-                totalCalories += meal.MealKCal * meal.MealQuantity;
-                totalProtein += meal.MealProtein * meal.MealQuantity;
-                totalCarbs += meal.MealCarbs * meal.MealQuantity;
-                totalFat += meal.MealFat * meal.MealQuantity;
+                totalCalories += Math.Round(meal.MealKCal * meal.MealQuantity);
+                totalProtein += Math.Round(meal.MealProtein * meal.MealQuantity);
+                totalCarbs += Math.Round(meal.MealCarbs * meal.MealQuantity);
+                totalFat += Math.Round(meal.MealFat * meal.MealQuantity);
 
                 <tr>
-                    <th scope="row">@meal.MealName , @meal.MealQuantity</th>
-                    <td>@(meal.MealKCal * meal.MealQuantity)</td>
-                    <td>@(meal.MealProtein * meal.MealQuantity)</td>
-                    <td>@(meal.MealCarbs * meal.MealQuantity)</td>
-                    <td>@(meal.MealFat * meal.MealQuantity)</td>
+                    <th scope="row">@meal.MealName, @(meal.MealQuantity * 100)g</th>
+                    <td>@Math.Round(meal.MealKCal * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealProtein * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealCarbs * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealFat * meal.MealQuantity)</td>
                     <td>
                         <a asp-action="Delete" asp-route-id="@meal.Id">
                             <i class="fas fa-minus-circle" style="color:red"></i>
@@ -48,13 +49,27 @@
 
             <tr style="background-color:aquamarine">
                 <th scope="row">Total:</th>
-                <td scope="row">@Math.Round(totalCalories, 2)</td>
-                <td scope="row">@Math.Round(totalProtein, 2)</td>
-                <td scope="row">@Math.Round(totalCarbs, 2)</td>
-                <td scope="row">@Math.Round(totalFat, 2)</td>
+                <td scope="row">@Math.Round(totalCalories)</td>
+                <td scope="row">@Math.Round(totalProtein)</td>
+                <td scope="row">@Math.Round(totalCarbs)</td>
+                <td scope="row">@Math.Round(totalFat)</td>
+            </tr>
+            <tr style="background-color:aquamarine">
+                <th scope="row">Your Daily Goal:</th>
+                <td scope="row">@Math.Round(Model.User.DailyCalories)</td>
+                @*<td scope="row">@Math.Round(totalProtein, 2)</td>
+                    <td scope="row">@Math.Round(totalCarbs, 2)</td>
+                    <td scope="row">@Math.Round(totalFat, 2)</td>*@
+            </tr>
+            <tr style="background-color:aquamarine">
+                <th scope="row">Remaining:</th>
+                <td scope="row">@Math.Round(Model.User.DailyCalories - totalCalories)</td>
+                @*<td scope="row">@Math.Round(totalProtein, 2)</td>
+                    <td scope="row">@Math.Round(totalCarbs, 2)</td>
+                    <td scope="row">@Math.Round(totalFat, 2)</td>*@
             </tr>
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="/Meals/All" role="button">Add Food</a>
+    <a class="btn btn-primary" asp-controller="Meals" asp-action="All" role="button">Add Food</a>
 </div>

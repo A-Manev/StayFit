@@ -1,10 +1,21 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System.Linq;
+
+    using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
     using StayFit.Data.Models.Enums;
+    using StayFit.Services.Mapping;
 
     public class UsersService : IUsersService
     {
+        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+
+        public UsersService(IDeletableEntityRepository<ApplicationUser> userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         public double CalculateUserCalories(ApplicationUser user)
         {
             double totalCalories = 0.0;
@@ -92,6 +103,15 @@
         public double CalculateForFemale(ApplicationUser user, double activityLevelValue)
         {
             return (activityLevelValue * (665 + (9.563 * user.CurrentWeight))) + (1.850 * user.Height) - (4.676 * user.Age);
+        }
+
+        public T GetById<T>(string userId)
+        {
+            return this.userRepository
+                .All()
+                .Where(x => x.Id == userId)
+                .To<T>()
+                .FirstOrDefault();
         }
     }
 }

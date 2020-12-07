@@ -5,5 +5,7 @@
     public interface IUsersService
     {
         double CalculateUserCalories(ApplicationUser user);
+
+        T GetById<T>(string userId);
     }
 }

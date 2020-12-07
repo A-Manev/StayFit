@@ -3,7 +3,7 @@
     using StayFit.Data.Models;
     using StayFit.Services.Mapping;
 
-    public class FoodDiaryViewModel : IMapFrom<MealDiary>
+    public class FoodDiaryInListViewModel : IMapFrom<MealDiary>
     {
         public int Id { get; set; }
 
@@ -11,7 +11,7 @@
 
         public string MealName { get; set; }
 
-        public double MealProtein { get; set; } /*=> this.MealProtein * this.MealQuantity;*/
+        public double MealProtein { get; set; }
 
         public double MealCarbs { get; set; }
 
