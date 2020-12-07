@@ -4,7 +4,22 @@
     this.ViewData["Title"] = "Your Food Diary";
 }
 
-<h1>@this.ViewData["Title"] for @Model.CurrentDate.ToShortDateString()</h1>
+<div>
+    <form method="get" asp-action="FoodDiary">
+        <div class="row">
+            <div class="col-md-5 mt-4 form-group">
+                <h3>@this.ViewData["Title"] for @Model.CurrentDate.ToShortDateString()</h3>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="datasearch">Search for date</label>
+                <input type="date" name="date" class="form-control" id="datasearch" placeholder="">
+            </div>
+            <div class="col-md-2 mt-4 form-group">
+                <button class="btn btn-light form-control" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 @{
     var totalCalories = 0.0;

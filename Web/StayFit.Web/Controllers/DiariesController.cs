@@ -1,6 +1,7 @@
 ﻿namespace StayFit.Web.Controllers
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -35,14 +36,27 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> FoodDiary()
+        public async Task<IActionResult> FoodDiary(DateTime? date)
         {
+            DateTime currentDate;
+
+            if (date == null)
+            {
+                currentDate = DateTime.UtcNow.Date;
+            }
+            else
+            {
+                var inputDateToShortDateString = date.Value.Date.ToShortDateString();
+
+                currentDate = DateTime.ParseExact(inputDateToShortDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = new FoodDiaryListViewModel
             {
-                Diary = this.diariesService.GetUserFoodDiary<FoodDiaryInListViewModel>(user.Id, DateTime.UtcNow.Date),
-                CurrentDate = DateTime.UtcNow,
+                Diary = this.diariesService.GetUserFoodDiary<FoodDiaryInListViewModel>(user.Id, currentDate),
+                CurrentDate = currentDate,
                 User = this.usersService.GetById<UserCaloriesGoalViewModel>(user.Id),
             };
 
