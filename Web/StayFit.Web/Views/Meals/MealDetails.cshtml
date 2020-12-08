@@ -19,7 +19,7 @@
                     <ul class="item-rating">
                         @for (int i = 1; i <= 5; i++)
                         {
-                            if (i <= Math.Round(@Model.AverageVote, MidpointRounding.ToEven))
+                            if (i <= Model.AverageVote)
                             {
                                 <li class="star star-fill" data-vote="@i"><i class="fas fa-star"></i></li>
                             }
@@ -28,11 +28,6 @@
                                 <li class="star star-empty" data-vote="@i"><i class="fas fa-star"></i></li>
                             }
                         }
-                        @*<li class="star star-empty" data-vote="1"><i class="fas fa-star"></i></li>
-                            <li class="star star-empty" data-vote="2"><i class="fas fa-star"></i></li>
-                            <li class="star star-empty" data-vote="3"><i class="fas fa-star"></i></li>
-                            <li class="star star-empty" data-vote="4"><i class="fas fa-star"></i></li>
-                            <li class="star star-empty" data-vote="5"><i class="fas fa-star"></i></li>*@
                         <li><span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span> </li>
                     </ul>
                 </div>
@@ -163,8 +158,19 @@
                     },
                     success: function (data) {
 
-                        console.log(data);
                         $('#averageVoteValue').html(data.averageVote.toFixed(1));
+
+                        var stars = Array.from($(".fa-star"));
+                        for (var i = 0; i < stars.length; i++) {
+
+                            if (i < Math.floor(data.averageVote)) {
+                                stars[i].parentNode.classList.remove('star-empty');
+                                stars[i].parentNode.classList.add('star-fill');
+                            } else {
+                                stars[i].parentNode.classList.remove('star-fill');
+                                stars[i].parentNode.classList.add('star-empty');
+                            }
+                        }
                     },
                     contentType: 'application/json',
                 });
