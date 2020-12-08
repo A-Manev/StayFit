@@ -5,6 +5,7 @@
     using System.Linq;
 
     using AutoMapper;
+    using Ganss.XSS;
     using StayFit.Data.Models;
     using StayFit.Data.Models.Enums;
     using StayFit.Services.Mapping;
@@ -54,6 +55,8 @@
         public string SubCategoryName { get; set; }
 
         public double AverageVote { get; set; }
+
+        public string SanitizedContent => new HtmlSanitizer().Sanitize(this.MethodOfPreparation);
 
         public IEnumerable<IngredientsViewModel> Ingredients { get; set; }
 

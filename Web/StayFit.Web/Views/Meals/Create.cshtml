@@ -97,7 +97,7 @@
                 <div class="form-row">
                     <div class="col-sm-6 form-group">
                         <label asp-for="MethodOfPreparation" class="text-primary font-weight-bold"></label>
-                        <textarea asp-for="MethodOfPreparation" class="form-control" rows="4"></textarea>
+                        <textarea asp-for="MethodOfPreparation" class="form-control edit-with-tinymce" rows="4"></textarea>
                         <span asp-validation-for="MethodOfPreparation" class=" text-danger"></span>
                     </div>
                     <div class="col-sm-6 form-group">
@@ -132,3 +132,16 @@
         </div>
     </form>
 </div>
+
+<script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea.edit-with-tinymce",
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        plugins: [
+            "image paste table link code media fullscreen wordcount searchreplace lists"
+        ]
+    });
+</script>
