@@ -1,0 +1,3 @@
+﻿function showAddCommentForm() {
+    $("#AddCommentFrom").toggle();
+}
