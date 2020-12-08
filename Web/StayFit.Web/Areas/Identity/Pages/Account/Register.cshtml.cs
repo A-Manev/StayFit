@@ -79,6 +79,18 @@
 
                 user.RemainingCalories = user.DailyCalories;
 
+                // this line calculate the amount of protein which user should take daily
+                // (0.25 = 25% from daily calories, 4 = in 1 gram protein has 4 calories)
+                user.Protein = user.DailyCalories * 0.25 / 4;
+
+                // this line calculate the amount of carbs which user should take daily
+                // (0.5 = 50% from daily calories, 4 = in 1 gram carbs has 4 calories)
+                user.Carbs = user.DailyCalories * 0.5 / 4;
+
+                // this line calculate the amount of fat which user should take daily
+                // (0.25 = 25% from daily calories, 4 = in 1 gram fat has 9 calories)
+                user.Fat = user.DailyCalories * 0.25 / 9;
+
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
                 if (result.Succeeded)

@@ -35,6 +35,9 @@
                 .FirstOrDefault();
 
             user.RemainingCalories -= meal.KCal * quantity;
+            user.Protein -= meal.Protein * quantity;
+            user.Carbs -= meal.Carbs * quantity;
+            user.Fat -= meal.Fat * quantity;
 
             var mealDiary = new MealDiary
             {
@@ -68,6 +71,9 @@
             if (currentMealInDiary.CreatedOn.Date == DateTime.UtcNow.Date)
             {
                 user.RemainingCalories += meal.KCal * currentMealInDiary.MealQuantity;
+                user.Protein += meal.Protein * currentMealInDiary.MealQuantity;
+                user.Carbs += meal.Carbs * currentMealInDiary.MealQuantity;
+                user.Fat += meal.Fat * currentMealInDiary.MealQuantity;
             }
 
             this.mealsDiaryRepository.Delete(currentMealInDiary);
