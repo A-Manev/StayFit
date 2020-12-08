@@ -95,12 +95,13 @@
                 <strong>Nutrition: per serving</strong>
             </div>
             <div class="form-row">
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <table class="table table-responsive text-center table-borderless" style="background-color:rgba(114,174,178,.25);" @*style="padding: 50px;"*@>
                         <thead @*class="thead-dark"*@>
                             <tr>
                                 <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Calories</th>
                                 <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Protein</th>
+                                <th class="" scope="col">Carbs</th>
                                 <th class="" scope="col">Fat</th>
                                 <th class="" scope="col">Saturates</th>
                                 <th class="" scope="col">Sugars</th>
@@ -112,6 +113,7 @@
                             <tr>
                                 <th scope="row">@Model.KCal<text>kcal</text></th>
                                 <td scope="row">@Model.Protein<text>g</text></td>
+                                <td scope="row">@Model.Carbs<text>g</text></td>
                                 <td scope="row">@Model.Fat<text>g</text></td>
                                 <td scope="row">@Model.Saturates<text>g</text></td>
                                 <td scope="row">@Model.Sugars<text>g</text></td>
