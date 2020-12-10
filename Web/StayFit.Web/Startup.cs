@@ -80,6 +80,7 @@
             services.AddTransient<IHomeService, HomeService>();
             services.AddTransient<IDiariesService, DiariesService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ILikesService, LikesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

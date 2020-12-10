@@ -32,7 +32,13 @@
                                     </div>
                                     <div class="bg-white p-2">
                                         <div class="d-flex flex-row fs-12">
-                                            <div class="like p-2 cursor"><i class="far fa-thumbs-up"></i><span class="ml-1">Like</span></div>
+                                            <form method="post">
+                                                <div class="like p-2 cursor">
+                                                    <a onclick="like(@comment.Id)">
+                                                        <i class="far fa-thumbs-up"></i> <span id="likesCount">@comment.CommentLikes</span><span class="ml-1">Like</span>
+                                                    </a>
+                                                </div>
+                                            </form>
                                             <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" onclick="pushParentId(@comment.Id)"><i class="far fa-comment-dots"></i><span class="ml-1">Comment</span></div>
                                             <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + two)" href="#collapse-@(comment.Id + two)"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
                                         </div>
@@ -259,6 +265,23 @@
 
 @section Scripts {
     <script>
+        function like(commentId) {
+            console.log(commentId);
+            //var json = { commentId: commentId, isLiked: false };
+            var json = { commentId: commentId };
+            console.log(json);
+            $.ajax({
+                url: "/api/Likes",
+                type: "POST",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    console.log(data);
+                    $('#likesCount').html(data.likesCount);
+                },
+                contentType: 'application/json',
+            });
+        }
+
         function pushParentId(parentId) {
             console.log(parentId);
             $("#AddParentId input[name='ParentId']").val(parentId);
