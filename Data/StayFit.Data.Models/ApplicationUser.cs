@@ -60,9 +60,15 @@ namespace StayFit.Data.Models
 
         public double Protein { get; set; }
 
+        public double RemainingProtein { get; set; }
+
         public double Carbs { get; set; }
 
+        public double RemainingCarbs { get; set; }
+
         public double Fat { get; set; }
+
+        public double RemainingFat { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
