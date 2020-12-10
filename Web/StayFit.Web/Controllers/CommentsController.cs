@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
@@ -10,21 +11,34 @@
 
     public class CommentsController : Controller
     {
-        private readonly ICommentService commentService;
+        private readonly ICommentService commentsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public CommentsController(ICommentService commentService, UserManager<ApplicationUser> userManager)
+        public CommentsController(ICommentService commentsService, UserManager<ApplicationUser> userManager)
         {
-            this.commentService = commentService;
+            this.commentsService = commentsService;
             this.userManager = userManager;
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreateCommentInputModel inputModel)
         {
+            var parentId = inputModel.ParentId == 0
+                ? (int?)null
+                : inputModel.ParentId;
+
+            if (parentId.HasValue)
+            {
+                if (!this.commentsService.IsInMealId(parentId.Value, inputModel.MealId))
+                {
+                    return this.BadRequest();
+                }
+            }
+
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.commentService.Create(inputModel.MealId, user.Id, inputModel.Content);
+            await this.commentsService.Create(inputModel.MealId, user.Id, inputModel.Content, parentId);
 
             return this.RedirectToAction("MealDetails", "Meals", new { id = inputModel.MealId });
         }

@@ -1,6 +1,73 @@
 ﻿@model StayFit.Web.ViewModels.Meals.MealDetailsViewModel
 @{
     this.ViewData["Title"] = "Meal Details";
+
+    async Task DisplayComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentId == parentId);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+            string one = "7f30eefe5c51e1ae0939dab2051db75f";
+            string two = "514bf9dd84e9f3785a7db504543ba22e";
+
+            <div class="container-fluid mt-100">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4 ">
+                            <div class="card-header">
+                                <div class="d-flex flex-column comment-section" id="myGroup">
+                                    <div class="bg-white p-2">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.UserFirstName @comment.UserLastName</span><span class="date text-black-50">Shared publicly - @comment.CreatedOn</span></div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">@Html.Raw(comment.SanitizedContent)</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-2">
+                                        <div class="d-flex flex-row fs-12">
+                                            <div class="like p-2 cursor"><i class="far fa-thumbs-up"></i><span class="ml-1">Like</span></div>
+                                            <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" onclick="pushParentId(@comment.Id)"><i class="far fa-comment-dots"></i><span class="ml-1">Comment</span></div>
+                                            <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + two)" href="#collapse-@(comment.Id + two)"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-@(comment.Id + one)" class="bg-light p-2 collapse" data-parent="#myGroup">
+                                        <div class="d-flex flex-row align-items-start">
+                                            <img class="rounded-circle mr-2" src="@*https://russiansbrides.com/wp-content/uploads/2020/02/polish.jpg*@" width="40">
+                                            <form asp-controller="Comments" asp-action="Create" method="post" id="AddParentId">
+                                                <input type="hidden" name="ParentId" value="0" />
+                                                <input type="hidden" name="MealId" value="@this.Model.Id" />
+                                                <div>
+                                                    <label for="Content" id="elementtoScrollToID"></label>
+                                                    <textarea name="Content" id="Content" class="form-control edit-with-tinymce"></textarea>
+                                                </div>
+                                                <div class="mt-2 text-right">
+                                                    <input type="submit" class="btn btn-outline-success btn-sm" name="name" value="Reply" />
+                                                    <button class="btn btn-outline-danger btn-sm ml-1 shadow-none" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" type="button">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-@(comment.Id + two)" class="bg-light p-2 collapse" data-parent="#myGroup">
+                                        <div class="d-flex flex-row align-items-start"><i class="fab fa-facebook-f border p-3 rounded mr-1"></i><i class="fab fa-twitter border p-3 rounded mr-1"></i><i class="fab fa-linkedin border p-3 rounded mr-1"></i><i class="fab fa-instagram border p-3 rounded mr-1"></i><i class="fab fa-dribbble border p-3 rounded mr-1"></i> <i class="fab fa-pinterest-p border p-3 rounded mr-1"></i> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @{ await DisplayComments(comment.Id); }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 }
 
 <h3> @Model.CategoryName <i class="fas fa-greater-than"></i>  @Model.SubCategoryName</h3>
@@ -97,10 +164,10 @@
             <div class="form-row">
                 <div class="col-md-10">
                     <table class="table table-responsive text-center table-borderless" style="background-color:rgba(114,174,178,.25);" @*style="padding: 50px;"*@>
-                        <thead @*class="thead-dark"*@>
+                        <thead>
                             <tr>
-                                <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Calories</th>
-                                <th class="" scope="col" @*style="background-color:rgba(114,174,178,.25);"*@>Protein</th>
+                                <th class="" scope="col">Calories</th>
+                                <th class="" scope="col">Protein</th>
                                 <th class="" scope="col">Carbs</th>
                                 <th class="" scope="col">Fat</th>
                                 <th class="" scope="col">Saturates</th>
@@ -143,27 +210,39 @@
     <form method="post" id="antiForgeryForm"></form>
 </div>
 <div>
-    <button class="btn btn-warning btn-lg" onclick="showAddCommentForm()">Comment</button>
+    @if (Model.Comments.Any())
+    {
+        <button class="btn btn-warning btn-lg" onclick="showAddCommentForm()">Comment</button>
+    }
 </div>
 
-<div id="AddCommentFrom" style="display:none">
-    <form asp-controller="Comments" asp-action="Create" method="post">
+<div>
+    <form asp-controller="Comments" asp-action="Create" method="post" id="AddCommentFrom" style="display:none">
         <input type="hidden" name="MealId" value="@this.Model.Id" />
         <div>
             <label for="Content"></label>
             <textarea name="Content" id="Content" class="form-control edit-with-tinymce"></textarea>
         </div>
-        <div>
-            @*<button type="button" class="btn btn-danger">Danger</button>*@
-            <input type="submit" class="btn btn-danger" name="name" value="Add comment" />
+        <div class="mt-2">
+            <input type="submit" class="btn btn-success" name="name" value="Add comment" />
         </div>
     </form>
 </div>
 
-@foreach (var comment in Model.Comments)
-{
-    @comment.Content;
-}
+<div class="container mt-5">
+    @if (!Model.Comments.Any())
+    {
+        <div class="text-center">
+            <h4 class="font-weight-light">There are no comments yet</h4>
+            <button class="btn btn-warning btn-lg" onclick="showAddCommentForm()">Comment</button>
+        </div>
+    }
+    else
+    {
+        { await DisplayComments(null); }
+    }
+
+</div>
 
 <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -180,6 +259,15 @@
 
 @section Scripts {
     <script>
+        function pushParentId(parentId) {
+            console.log(parentId);
+            $("#AddParentId input[name='ParentId']").val(parentId);
+
+            //$([document.documentElement, document.body]).animate({
+            //    scrollTop: $("#AddCommentFrom").offset().top
+            //}, 2000);
+        }
+
         $("li[data-vote]").each(function (el) {
             $(this).click(function () {
                 var value = $(this).attr("data-vote");

@@ -1,5 +1,6 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using StayFit.Data.Common.Repositories;
@@ -26,6 +27,17 @@
 
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
+        }
+
+        public bool IsInMealId(int commentId, int mealId)
+        {
+            var commentMealId = this.commentsRepository
+                .All()
+                .Where(x => x.Id == commentId)
+                .Select(x => x.MealId)
+                .FirstOrDefault();
+
+            return commentMealId == mealId;
         }
     }
 }
