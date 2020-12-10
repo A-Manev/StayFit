@@ -24,7 +24,7 @@
                                     <div class="bg-white p-2">
                                         <div class="d-flex flex-row user-info">
                                             <img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
-                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.UserFirstName @comment.UserLastName</span><span class="date text-black-50">Shared publicly - @comment.CreatedOn</span></div>
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">@comment.UserFirstName @comment.UserLastName</span><span class="date text-black-50">Shared publicly - <time datetime="@comment.CreatedOn.ToString("O")"></time></span></div>
                                         </div>
                                         <div class="mt-2">
                                             <p class="comment-text">@Html.Raw(comment.SanitizedContent)</p>

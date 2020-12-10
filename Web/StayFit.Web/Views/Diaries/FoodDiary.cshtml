@@ -7,8 +7,8 @@
 <div>
     <form method="get" asp-action="FoodDiary">
         <div class="row">
-            <div class="col-md-5 mt-4 form-group">
-                <h3>@this.ViewData["Title"] for @Model.CurrentDate.ToShortDateString()</h3>
+            <div class="col-md-7 mt-4 form-group">
+                <h4>@this.ViewData["Title"] for: <kbd>@Model.CurrentDate.ToString("dddd, MMMM dd, yyyy")</kbd></h4>
             </div>
             <div class="col-md-3 form-group">
                 <label for="datasearch">Search for date</label>
