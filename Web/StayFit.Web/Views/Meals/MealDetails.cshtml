@@ -34,8 +34,8 @@
                                         <div class="d-flex flex-row fs-12">
                                             <form method="post">
                                                 <div class="like p-2 cursor">
-                                                    <a onclick="like(@comment.Id)">
-                                                        <i class="far fa-thumbs-up"></i> <span id="likesCount">@comment.CommentLikes</span><span class="ml-1">Like</span>
+                                                    <a @*onclick="like(@comment.Id)"*@>
+                                                        <i class="far fa-thumbs-up" data-i-holder="@comment.Id" onclick="like(@comment.Id)" id="likesCount">@comment.CommentLikes</i><span class="ml-1">Like</span>
                                                     </a>
                                                 </div>
                                             </form>
@@ -265,23 +265,6 @@
 
 @section Scripts {
     <script>
-        function like(commentId) {
-            console.log(commentId);
-            //var json = { commentId: commentId, isLiked: false };
-            var json = { commentId: commentId };
-            console.log(json);
-            $.ajax({
-                url: "/api/Likes",
-                type: "POST",
-                data: JSON.stringify(json),
-                success: function (data) {
-                    console.log(data);
-                    $('#likesCount').html(data.likesCount);
-                },
-                contentType: 'application/json',
-            });
-        }
-
         function pushParentId(parentId) {
             console.log(parentId);
             $("#AddParentId input[name='ParentId']").val(parentId);

@@ -26,11 +26,11 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.likesService.LikeAsync(inputModel.CommentId, userId);
+            var isLiked = await this.likesService.LikeAsync(inputModel.CommentId, userId);
 
             var likes = this.likesService.GetLikes(inputModel.CommentId);
 
-            return new LikeResponseModel { LikesCount = likes };
+            return new LikeResponseModel { LikesCount = likes, IsLiked = isLiked };
         }
     }
 }

@@ -24,7 +24,7 @@
                 .Count();
         }
 
-        public async Task LikeAsync(int commentId, string userId)
+        public async Task<bool> LikeAsync(int commentId, string userId)
         {
             var like = this.likesRepository
                 .All()
@@ -33,6 +33,10 @@
             if (like != null)
             {
                 this.likesRepository.Delete(like);
+
+                await this.likesRepository.SaveChangesAsync();
+
+                return false;
             }
             else
             {
@@ -44,9 +48,10 @@
                 };
 
                 await this.likesRepository.AddAsync(like);
-            }
+                await this.likesRepository.SaveChangesAsync();
 
-            await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
         }
     }
 }

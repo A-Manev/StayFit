@@ -2,8 +2,8 @@
 {
     public class LikeResponseModel
     {
-        public int Id { get; set; }
-
         public int LikesCount { get; set; }
+
+        public bool IsLiked { get; set; }
     }
 }

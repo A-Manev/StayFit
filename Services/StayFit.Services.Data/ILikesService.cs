@@ -4,7 +4,7 @@
 
     public interface ILikesService
     {
-        Task LikeAsync(int commentId, string userId);
+        Task<bool> LikeAsync(int commentId, string userId);
 
         int GetLikes(int commentId);
     }
