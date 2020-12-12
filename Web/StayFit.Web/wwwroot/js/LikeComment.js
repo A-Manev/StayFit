@@ -2,12 +2,15 @@
     var likes = document.querySelectorAll(".fa-thumbs-up");
     let arr = Array.from(likes);
     var i = arr.filter(x => x.attributes[1].nodeValue == commentId);
+    var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
     var json = { commentId: commentId };
-    console.log(json);
     $.ajax({
         url: "/api/Likes",
         type: "POST",
         data: JSON.stringify(json),
+        headers: {
+            'X-CSRF-TOKEN': antiForgeryToken
+        },
         success: function (data) {
             $(i[0]).text(data.likesCount);
 

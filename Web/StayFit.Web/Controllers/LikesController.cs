@@ -21,7 +21,6 @@
 
         [HttpPost]
         [Authorize]
-        [IgnoreAntiforgeryToken]
         public async Task<ActionResult<LikeResponseModel>> Like(LikeInputModel inputModel)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
