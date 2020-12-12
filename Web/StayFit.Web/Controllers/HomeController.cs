@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
 
+    using Hangfire;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
@@ -18,14 +19,16 @@
 
         private readonly IExerciseScraperService scraperService;
         private readonly IMealScraperService mealService;
+        private readonly IBackgroundJobClient backgroundJobs;
 
-        public HomeController(IHomeService homeService, UserManager<ApplicationUser> userManager, IExerciseScraperService scraperService, IMealScraperService mealService)
+        public HomeController(IHomeService homeService, UserManager<ApplicationUser> userManager, IExerciseScraperService scraperService, IMealScraperService mealService, IBackgroundJobClient backgroundJobs)
         {
             this.homeService = homeService;
             this.userManager = userManager;
 
             this.scraperService = scraperService;
             this.mealService = mealService;
+            this.backgroundJobs = backgroundJobs;
         }
 
         public async Task<IActionResult> Index()
@@ -37,6 +40,10 @@
             if (this.User.Identity.IsAuthenticated)
             {
                 var user = await this.userManager.GetUserAsync(this.User);
+
+                //this.backgroundJobs.AddOrUpdate(() => this.homeService.ChangeUserCalories(user.Id), Cron.Minutely());
+
+                RecurringJob.AddOrUpdate(() => this.homeService.ChangeUserCalories(user.Id), Cron.Daily());
 
                 var viewModel = this.homeService.GetUserInfo<HomePageUserViewModel>(user.Id);
 

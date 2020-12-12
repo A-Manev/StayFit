@@ -2,6 +2,7 @@
 {
     using System.Reflection;
 
+    using Hangfire;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -81,6 +82,9 @@
             services.AddTransient<IDiariesService, DiariesService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ILikesService, LikesService>();
+
+            services.AddHangfire(x => x.UseSqlServerStorage(this.configuration.GetConnectionString("DefaultConnection")));
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,11 +120,17 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireDashboard();
+
+            app.UseHangfireServer();
+
             app.UseEndpoints(
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+                        endpoints.MapHangfireDashboard();
                         endpoints.MapRazorPages();
                     });
         }
