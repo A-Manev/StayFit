@@ -14,5 +14,7 @@
         int GetAllMealsCount();
 
         MealDetailsViewModel GetMealDetails(int mealId);
+
+        (IEnumerable<T> Meals, int Count) GetAllSearched<T>(SearchMealInputModel input, int page, int itemsPerPage = 15);
     }
 }

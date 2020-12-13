@@ -26,10 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="All">All Meals</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="Create">Create Meal</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Meals" asp-action="Index">Meals</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="All">All Exercises</a>
@@ -70,7 +67,7 @@
     <script src="~/js/ProgressBar.js" asp-append-version="true"></script>
     <script src="~/js/PassMealId.js" asp-append-version="true"></script>
     <script src="~/js/ShowCommentForm.js" asp-append-version="true"></script>
-    <script src="~/js/LikeComment.js" asp-append-version="true"></script>>
+    <script src="~/js/LikeComment.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

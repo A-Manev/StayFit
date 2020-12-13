@@ -1,0 +1,80 @@
+﻿@model StayFit.Web.ViewModels.Meals.SearchMealInputModel
+@{
+    this.ViewData["Title"] = "Index Page";
+    var categoryItems = this.Model.CategoriesItems.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+@using StayFit.Data.Models.Enums
+
+<h1>@this.ViewData["Title"]</h1>
+
+<div class="card">
+    <form asp-action="Search" method="get" class="border border-light p-3">
+        <button type="submit" class="btn btn-light btn-lg btn-block">
+            <h3 class="py-4">
+                <strong>Search meal</strong>
+            </h3>
+        </button>
+        <div class="form-row">
+            <div class="col-md-12 form-group btn-lg btn-block">
+                <label asp-for="Name" class="font-weight-bold"></label>
+                <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter meal name" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 form-group">
+                <label asp-for="CategoryId" class="font-weight-bold"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="categoryItems" onchange="LoadSubCategories()">
+                    <option hidden="hidden">All</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="SubCategory" class="font-weight-bold"></label>
+                <select asp-for="SubCategory" class="form-control">
+                    <option hidden="hidden">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 form-group">
+                <label asp-for="PreparationTime" class="font-weight-bold"></label>
+                <input asp-for="PreparationTime" class="form-control" />
+            </div>
+            <div class="col-md-3 ">
+                <label asp-for="CookingTime" class="font-weight-bold"></label>
+                <input asp-for="CookingTime" class="form-control" />
+            </div>
+            <div class="col-md-3 form-group">
+                <label asp-for="SkillLevel" class="font-weight-bold"></label>
+                <select asp-for="SkillLevel" class="form-control" asp-items="@Html.GetEnumSelectList<SkillLevel>()">
+                    <option hidden="hidden"> Choose skill level</option>
+                </select>
+                <span asp-validation-for="SkillLevel" class="text-danger"></span>
+            </div>
+            <div class="col-md-3 form-group">
+                <label asp-for="PortionCount" class="font-weight-bold"></label>
+                <input asp-for="PortionCount" class="form-control" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row mt-2">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">View all our meals</h5>
+                <p class="card-text">You can see a different ideas and eat something delicious.</p>
+                <a asp-action="All" class="btn btn-primary">View All</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Create your own meals</h5>
+                <p class="card-text">Create your favorite foods and let others know about them.</p>
+                <a asp-action="Create" class="btn btn-primary">Create</a>
+            </div>
+        </div>
+    </div>
+</div>

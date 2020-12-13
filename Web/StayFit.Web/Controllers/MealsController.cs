@@ -101,5 +101,48 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult Index()
+        {
+            var viewModel = new SearchMealInputModel();
+
+            viewModel.CategoriesItems = this.categoriesService.GetAllCategories();
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult Search(SearchMealInputModel inputModel, int id = 1)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int ItemsPerPage = 15;
+
+            var result = this.mealService.GetAllSearched<MealInListViewModel>(inputModel, id);
+
+            if (result.Count == 0)
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = new MealListViewModel
+            {
+                PageNumber = id,
+                MealsCount = result.Count,
+                Meals = result.Meals,
+                ItemsPerPage = ItemsPerPage,
+                Name = inputModel.Name,
+                CategoryId = inputModel.CategoryId,
+                SubCategory = inputModel.SubCategory,
+                SkillLevel = inputModel.SkillLevel,
+                PortionCount = inputModel.PortionCount,
+                PreparationTime = inputModel.PreparationTime,
+                CookingTime = inputModel.CookingTime,
+            };
+
+            return this.View(viewModel);
+        }
     }
 }

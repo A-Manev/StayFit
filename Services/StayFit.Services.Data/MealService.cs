@@ -118,5 +118,50 @@
                 .To<MealDetailsViewModel>()
                 .FirstOrDefault();
         }
+
+        public (IEnumerable<T> Meals, int Count) GetAllSearched<T>(SearchMealInputModel input, int page, int itemsPerPage = 15)
+        {
+            var query = this.mealRepository
+                .All()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(input.Name))
+            {
+                query = query.Where(x => x.Name.Contains(input.Name));
+            }
+
+            if (input.CategoryId != 0)
+            {
+                query = query.Where(x => x.Category.Id == input.CategoryId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(input.PortionCount))
+            {
+                query = query.Where(x => x.PortionCount.Contains(input.PortionCount));
+            }
+
+            if (!string.IsNullOrWhiteSpace(input.PreparationTime))
+            {
+                query = query.Where(x => x.PreparationTime.Contains(input.PreparationTime));
+            }
+
+            if (!string.IsNullOrWhiteSpace(input.CookingTime))
+            {
+                query = query.Where(x => x.CookingTime.Contains(input.CookingTime));
+            }
+
+            if (input.SkillLevel != 0)
+            {
+                query = query.Where(x => x.SkillLevel == input.SkillLevel);
+            }
+
+            if (!string.IsNullOrWhiteSpace(input.SubCategory) && input.SubCategory != "All")
+            {
+                query = query.Where(x => x.SubCategory.Name == input.SubCategory);
+            }
+
+            return (query.OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage).To<T>().ToList(), query.ToList().Count);
+        }
     }
 }
