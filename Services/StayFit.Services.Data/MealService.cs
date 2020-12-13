@@ -96,14 +96,14 @@
             await this.mealRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<MealInListViewModel> GetAll(int page, int itemsPerPage = 15)
+        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 15)
         {
             return this.mealRepository
                 .AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .To<MealInListViewModel>()
+                .To<T>()
                 .ToList();
         }
 
@@ -112,10 +112,10 @@
             return this.mealRepository.AllAsNoTracking().Count();
         }
 
-        public MealDetailsViewModel GetMealDetails(int mealId)
+        public T GetMealDetails<T>(int mealId)
         {
             return this.mealRepository.AllAsNoTracking().Where(x => x.Id == mealId)
-                .To<MealDetailsViewModel>()
+                .To<T>()
                 .FirstOrDefault();
         }
 

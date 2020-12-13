@@ -1,0 +1,77 @@
+﻿@model StayFit.Web.ViewModels.Meals.MealListViewModel
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>}">
+            <a class="page-link"
+               asp-action="Search"
+               asp-route-id="@Model.PreviousPageNumber"
+               asp-route-name="@Model.Name"
+               asp-route-categoryId="@Model.CategoryId"
+               asp-route-subCategory="@Model.SubCategory"
+               asp-route-skillLevel="@Model.SkillLevel"
+               asp-route-portionCount="@Model.PortionCount"
+               asp-route-preparationTime="@Model.PreparationTime"
+               asp-route-cookingTime="@Model.CookingTime">
+                Previous
+            </a>
+        </li>
+        @for (int i = Model.PageNumber - 2; i < Model.PageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Search"
+                       asp-route-id="@i"
+                       asp-route-name="@Model.Name"
+                       asp-route-categoryId="@Model.CategoryId"
+                       asp-route-subCategory="@Model.SubCategory"
+                       asp-route-skillLevel="@Model.SkillLevel"
+                       asp-route-portionCount="@Model.PortionCount"
+                       asp-route-preparationTime="@Model.PreparationTime"
+                       asp-route-cookingTime="@Model.CookingTime">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item active">
+            <span class="page-link">
+                @Model.PageNumber
+                <span class="sr-only">(current)</span>
+            </span>
+        </li>
+        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 2; i++)
+        {
+            if (i <= Model.PagesCount)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Search"
+                       asp-route-id="@i"
+                       asp-route-name="@Model.Name"
+                       asp-route-categoryId="@Model.CategoryId"
+                       asp-route-subCategory="@Model.SubCategory"
+                       asp-route-skillLevel="@Model.SkillLevel"
+                       asp-route-portionCount="@Model.PortionCount"
+                       asp-route-preparationTime="@Model.PreparationTime"
+                       asp-route-cookingTime="@Model.CookingTime">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>}">
+            <a class="page-link"
+               asp-action="Search"
+               asp-route-id="@Model.NextPageNumber"
+               asp-route-name="@Model.Name"
+               asp-route-categoryId="@Model.CategoryId"
+               asp-route-subCategory="@Model.SubCategory"
+               asp-route-skillLevel="@Model.SkillLevel"
+               asp-route-portionCount="@Model.PortionCount"
+               asp-route-preparationTime="@Model.PreparationTime"
+               asp-route-cookingTime="@Model.CookingTime">Next</a>
+        </li>
+    </ul>
+</nav>

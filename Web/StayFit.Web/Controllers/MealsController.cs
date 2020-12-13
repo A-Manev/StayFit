@@ -19,7 +19,12 @@
         private readonly IMealService mealService;
         private readonly IWebHostEnvironment environment;
 
-        public MealsController(UserManager<ApplicationUser> userManager, ICategoriesService categoriesService, ISubCategoriesService subCategoriesService, IMealService mealService, IWebHostEnvironment environment)
+        public MealsController(
+            UserManager<ApplicationUser> userManager,
+            ICategoriesService categoriesService,
+            ISubCategoriesService subCategoriesService,
+            IMealService mealService,
+            IWebHostEnvironment environment)
         {
             this.userManager = userManager;
             this.categoriesService = categoriesService;
@@ -88,7 +93,7 @@
             {
                 PageNumber = id,
                 MealsCount = this.mealService.GetAllMealsCount(),
-                Meals = this.mealService.GetAll(id),
+                Meals = this.mealService.GetAll<MealInListViewModel>(id),
                 ItemsPerPage = ItemsPerPage,
             };
 
@@ -97,7 +102,7 @@
 
         public IActionResult MealDetails(int id)
         {
-            var viewModel = this.mealService.GetMealDetails(id);
+            var viewModel = this.mealService.GetMealDetails<MealDetailsViewModel>(id);
 
             return this.View(viewModel);
         }
