@@ -39,5 +39,10 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult Workout()
+        {
+            return this.View();
+        }
     }
 }
