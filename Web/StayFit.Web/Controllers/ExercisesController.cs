@@ -3,8 +3,9 @@
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Services.Data;
     using StayFit.Web.ViewModels.Exercises;
+    using System.Collections.Generic;
 
-    public class ExercisesController : Controller
+    public class ExercisesController : BaseController
     {
         private readonly IExercisesService exercisesService;
 
@@ -42,7 +43,18 @@
 
         public IActionResult Workout()
         {
-            return this.View();
+            var viewModel = new ExerciseInputModel
+            {
+                Exercises = this.exercisesService.GetAll<ExerciseDropdownViewModel>(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Workouts(List<ExerciseInputModel> inputModel)
+        {
+            return this.Ok();
         }
     }
 }

@@ -9,5 +9,7 @@
         T GetExerciseDetails<T>(int id);
 
         int GetCount();
+
+        IEnumerable<T> GetAll<T>();
     }
 }

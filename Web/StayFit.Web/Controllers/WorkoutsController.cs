@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@
 
             await this.workoutService.CreateAsync(inputModel, user.Id);
 
-            return this.Ok();
+            return this.Redirect("/Home/Index");
         }
     }
 }

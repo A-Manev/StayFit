@@ -39,5 +39,14 @@
         {
             return this.exerciseRepository.All().Count();
         }
+
+        public IEnumerable<T> GetAll<T>()
+        {
+            return this.exerciseRepository
+               .AllAsNoTracking()
+               .OrderBy(x => x.Name)
+               .To<T>()
+               .ToList();
+        }
     }
 }

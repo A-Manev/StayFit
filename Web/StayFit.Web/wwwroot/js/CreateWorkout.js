@@ -1,5 +1,6 @@
 ﻿$("body").on("click", "#btnAdd", function () {
     var txtexercise = $("#txtexercise");
+    var exercise = document.getElementById('txtexercise');
     var txtreps = $("#txtreps");
     var txtsets = $("#txtsets");
     var txtweight = $("#txtweight");
@@ -11,7 +12,8 @@
 
     //Add cells
     var cell = $(row.insertCell(-1));
-    cell.html(txtexercise.val());
+    //cell.html(txtexercise.val());
+    cell.html(exercise.options[exercise.selectedIndex].textContent);
 
     cell = $(row.insertCell(-1));
     cell.html(txtreps.val());
@@ -65,6 +67,7 @@ $("body").on("click", "#btnSave", function () {
 
     $.ajax({
         url: "/api/Workouts",
+        //url: "/Exercises/Workouts",
         type: "POST",
         data: JSON.stringify(exercises),
         headers: {
@@ -73,6 +76,9 @@ $("body").on("click", "#btnSave", function () {
         success: function (r) {
             //alert(r + " record(s) inserted.");
             //ocation.reload();
+
+            var url = "https://localhost:44319/";
+            $(location).attr('href', "/");
         },
         contentType: 'application/json',
     });
