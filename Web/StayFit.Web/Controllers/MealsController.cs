@@ -92,7 +92,7 @@
             var viewModel = new MealListViewModel
             {
                 PageNumber = id,
-                MealsCount = this.mealService.GetAllMealsCount(),
+                TotalCount = this.mealService.GetAllMealsCount(),
                 Meals = this.mealService.GetAll<MealInListViewModel>(id),
                 ItemsPerPage = ItemsPerPage,
             };
@@ -135,7 +135,7 @@
             var viewModel = new MealListViewModel
             {
                 PageNumber = id,
-                MealsCount = result.Count,
+                TotalCount = result.Count,
                 Meals = result.Meals,
                 ItemsPerPage = ItemsPerPage,
                 Name = inputModel.Name,

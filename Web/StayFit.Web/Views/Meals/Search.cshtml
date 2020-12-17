@@ -8,39 +8,41 @@
 <div class="row">
     @foreach (var meal in Model.Meals)
     {
-        <div class="card col-sm-4 mt-2 p-3">
-            <a asp-action="MealDetails" asp-route-id="@meal.Id">
-                <img class="img-top img-fluid rounded" src="@meal.ImageUrl" alt="Card image cap">
-            </a>
-            <div class="card-body">
-                <h6 class="card-title row-cols-6 text-truncate"><a asp-action="MealDetails" asp-route-id="@meal.Id">@meal.Name</a></h6>
-                <div class="table-responsive">
-                    <table class="table text-center table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Calories</th>
-                                <th scope="col">Protein</th>
-                                <th scope="col">Carbs</th>
-                                <th scope="col">Fat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">@meal.KCal<text>kcal</text></th>
-                                <td scope="row">@meal.Protein<text>g</text></td>
-                                <td scope="row">@meal.Carbs<text>g</text></td>
-                                <td scope="row">@meal.Fat<text>g</text></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="col-sm-4 p-1">
+            <div class="card">
+                <div class="card-body">
+                    <a asp-action="MealDetails" asp-route-id="@meal.Id">
+                        <img class="img-top img-fluid rounded" src="@meal.ImageUrl" alt="Card image cap">
+                    </a>
+                    <h6 class="card-title row-cols-6 text-truncate"><a asp-action="MealDetails" asp-route-id="@meal.Id">@meal.Name</a></h6>
+                    <div class="table-responsive">
+                        <table class="table text-center table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Calories</th>
+                                    <th scope="col">Protein</th>
+                                    <th scope="col">Carbs</th>
+                                    <th scope="col">Fat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">@meal.KCal<text>kcal</text></th>
+                                    <td scope="row">@meal.Protein<text>g</text></td>
+                                    <td scope="row">@meal.Carbs<text>g</text></td>
+                                    <td scope="row">@meal.Fat<text>g</text></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a data-id="@meal.Id" class="select-Quantity btn btn-primary text-sm-right float-right" data-toggle="modal" data-target="#modalQuantity">Add to Diary</a>
                 </div>
-                <a data-id="@meal.Id" class="select-Quantity btn btn-primary text-sm-right float-right" data-toggle="modal" data-target="#modalQuantity">Add to Diary</a>
             </div>
         </div>
     }
 </div>
 <hr />
-<partial name="_SearchPartial" model="@Model" />
+<partial name="_MealsSearchPaginPartial" model="@Model" />
 
 <form asp-controller="Diaries" asp-action="Add" method="get">
     <div class="modal fade" id="modalQuantity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

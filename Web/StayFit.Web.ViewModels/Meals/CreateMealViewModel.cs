@@ -14,9 +14,11 @@
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Preparation Time")]
         public string PreparationTime { get; set; }
 
         [Required]
+        [Display(Name = "Cooking Time")]
         public string CookingTime { get; set; }
 
         [Required(ErrorMessage = "Add at least one image.")]
@@ -27,6 +29,7 @@
         public SkillLevel SkillLevel { get; set; }
 
         [Required]
+        [Display(Name = "Portion Count")]
         public string PortionCount { get; set; }
 
         [Required]

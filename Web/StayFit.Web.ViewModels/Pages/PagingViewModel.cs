@@ -14,9 +14,9 @@
 
         public int NextPageNumber => this.PageNumber + 1;
 
-        public int PagesCount => (int)Math.Ceiling((double)this.MealsCount / this.ItemsPerPage);
+        public int PagesCount => (int)Math.Ceiling((double)this.TotalCount / this.ItemsPerPage);
 
-        public int MealsCount { get; set; }
+        public int TotalCount { get; set; }
 
         public int ItemsPerPage { get; set; }
     }

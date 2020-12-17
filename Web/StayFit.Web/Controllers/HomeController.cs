@@ -19,16 +19,14 @@
 
         private readonly IExerciseScraperService scraperService;
         private readonly IMealScraperService mealService;
-        private readonly IBackgroundJobClient backgroundJobs;
 
-        public HomeController(IHomeService homeService, UserManager<ApplicationUser> userManager, IExerciseScraperService scraperService, IMealScraperService mealService, IBackgroundJobClient backgroundJobs)
+        public HomeController(IHomeService homeService, UserManager<ApplicationUser> userManager, IExerciseScraperService scraperService, IMealScraperService mealService)
         {
             this.homeService = homeService;
             this.userManager = userManager;
 
             this.scraperService = scraperService;
             this.mealService = mealService;
-            this.backgroundJobs = backgroundJobs;
         }
 
         public async Task<IActionResult> Index()
@@ -36,12 +34,9 @@
             // Move to administration area.
             // await this.mealService.PopulateDbWithMeal(2);
             // await this.scraperService.PopulateDbWithExercises(2);
-
             if (this.User.Identity.IsAuthenticated)
             {
                 var user = await this.userManager.GetUserAsync(this.User);
-
-                //this.backgroundJobs.AddOrUpdate(() => this.homeService.ChangeUserCalories(user.Id), Cron.Minutely());
 
                 RecurringJob.AddOrUpdate(() => this.homeService.ChangeUserCalories(user.Id), Cron.Daily());
 

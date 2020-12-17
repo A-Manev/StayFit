@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-sm-6 form-group">
                         <label asp-for="Description"></label>
-                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        <textarea asp-for="Description" class="form-control edit-with-tinymce" rows="4"></textarea>
                         <span asp-validation-for="Description" class=" text-danger"></span>
                     </div>
                 </div>
@@ -120,13 +120,13 @@
                         <span asp-validation-for="Ingredients" class=" text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Images"></label>
+                        <label asp-for="Images" class="text-primary font-weight-bold"></label>
                         <input asp-for="Images" class="form-control" />
                         <span asp-validation-for="Images" class=" text-danger"></span>
                     </div>
-                </div>
-                <div class="col-sm-6 mt-4">
-                    <button type="submit" class="btn btn-primary btn-block">Create</button>
+                    <div class="col-sm-6 mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">Create</button>
+                    </div>
                 </div>
             </div>
         </div>

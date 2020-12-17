@@ -47,7 +47,7 @@
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                MealsCount = this.exercisesService.GetCount(),
+                TotalCount = this.exercisesService.GetCount(),
                 Exercises = this.exercisesService.GetAll<ExerciseViewModel>(id, ItemsPerPage),
             };
 
@@ -103,7 +103,7 @@
             {
                 PageNumber = id,
                 ItemsPerPage = ItemsPerPage,
-                MealsCount = result.Count,
+                TotalCount = result.Count,
                 Exercises = result.Exercises,
                 Name = inputModel.Name,
                 BodyPart = inputModel.BodyPart,

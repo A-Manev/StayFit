@@ -70,10 +70,16 @@
 
             if (currentMealInDiary.CreatedOn.Date == DateTime.UtcNow.Date)
             {
-                user.RemainingCalories += meal.KCal * currentMealInDiary.MealQuantity;
-                user.RemainingProtein += meal.Protein * currentMealInDiary.MealQuantity;
-                user.RemainingCarbs += meal.Carbs * currentMealInDiary.MealQuantity;
-                user.RemainingFat += meal.Fat * currentMealInDiary.MealQuantity;
+                if (user.RemainingCalories + (meal.KCal * currentMealInDiary.MealQuantity) <= user.DailyCalories &&
+                    user.RemainingProtein + (meal.Protein * currentMealInDiary.MealQuantity) <= user.Protein &&
+                    user.RemainingCarbs + (meal.Carbs * currentMealInDiary.MealQuantity) <= user.Carbs &&
+                    user.RemainingFat + (meal.Fat * currentMealInDiary.MealQuantity) <= user.Fat)
+                {
+                    user.RemainingCalories += meal.KCal * currentMealInDiary.MealQuantity;
+                    user.RemainingProtein += meal.Protein * currentMealInDiary.MealQuantity;
+                    user.RemainingCarbs += meal.Carbs * currentMealInDiary.MealQuantity;
+                    user.RemainingFat += meal.Fat * currentMealInDiary.MealQuantity;
+                }
             }
 
             this.mealsDiaryRepository.Delete(currentMealInDiary);
