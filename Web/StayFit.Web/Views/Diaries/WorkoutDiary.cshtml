@@ -1,0 +1,46 @@
+﻿@model StayFit.Web.ViewModels.Diaries.WorkoutDiaryListViewModel
+
+@{
+    this.ViewData["Title"] = "Your Workout Diary";
+}
+
+<div class="container">
+    <div>
+        <form method="get" asp-action="WorkoutDiary">
+            <div class="row">
+                <div class="col-md-7 mt-4 form-group">
+                    <h4>@this.ViewData["Title"] for: <kbd>@Model.CurrentDate.ToString("dddd, MMMM dd, yyyy")</kbd></h4>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="datasearch">Search for date</label>
+                    <input type="date" name="date" class="form-control" id="datasearch" placeholder="">
+                </div>
+                <div class="col-md-2 mt-4 form-group">
+                    <button class="btn btn-light form-control" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Exercise Name</th>
+                <th scope="col">Reps</th>
+                <th scope="col">Sets</th>
+                <th scope="col">Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exercise in Model.Diary)
+            {
+                <tr>
+                    <td>@exercise.ExerciseName</td>
+                    <td>@exercise.Reps</td>
+                    <td>@exercise.Reps</td>
+                    <td>@exercise.Weight<text>kg</text></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

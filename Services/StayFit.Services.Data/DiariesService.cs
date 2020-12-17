@@ -14,12 +14,18 @@
         private readonly IDeletableEntityRepository<MealDiary> mealsDiaryRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<Meal> mealRepository;
+        private readonly IRepository<WorkoutExercise> workoutExerciseRepository;
 
-        public DiariesService(IDeletableEntityRepository<MealDiary> mealsDiaryRepository, IDeletableEntityRepository<ApplicationUser> userRepository, IDeletableEntityRepository<Meal> mealRepository)
+        public DiariesService(
+            IDeletableEntityRepository<MealDiary> mealsDiaryRepository,
+            IDeletableEntityRepository<ApplicationUser> userRepository,
+            IDeletableEntityRepository<Meal> mealRepository,
+            IRepository<WorkoutExercise> workoutExerciseRepository)
         {
             this.mealsDiaryRepository = mealsDiaryRepository;
             this.userRepository = userRepository;
             this.mealRepository = mealRepository;
+            this.workoutExerciseRepository = workoutExerciseRepository;
         }
 
         public async Task AddMealToDiaryAsync(int mealId, string userId, double quantity)
@@ -92,6 +98,15 @@
             return this.mealsDiaryRepository
                 .All()
                 .Where(x => x.UserId == userId && x.CreatedOn.Date == date.Date)
+                .To<T>()
+                .ToList();
+        }
+
+        public IEnumerable<T> GetUserWorkoutDiary<T>(string userId, DateTime date)
+        {
+            return this.workoutExerciseRepository
+                .All()
+                .Where(x => x.Workout.User.Id == userId && x.Workout.CreatedOn.Date == date)
                 .To<T>()
                 .ToList();
         }

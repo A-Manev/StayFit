@@ -72,5 +72,31 @@
 
             return this.RedirectToAction(nameof(this.FoodDiary));
         }
+
+        public async Task<IActionResult> WorkoutDiary(DateTime? date)
+        {
+            DateTime currentDate;
+
+            if (date == null)
+            {
+                currentDate = DateTime.UtcNow.Date;
+            }
+            else
+            {
+                var inputDateToShortDateString = date.Value.Date.ToShortDateString();
+
+                currentDate = DateTime.ParseExact(inputDateToShortDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var viewModel = new WorkoutDiaryListViewModel
+            {
+                Diary = this.diariesService.GetUserWorkoutDiary<WorkoutDiaryInListViewModel>(user.Id, currentDate),
+                CurrentDate = currentDate,
+            };
+
+            return this.View(viewModel);
+        }
     }
 }
