@@ -1,0 +1,74 @@
+﻿@model StayFit.Web.ViewModels.Exercises.SearchExerciseInputModel
+@{
+    this.ViewData["Title"] = "Index Page";
+    var equipments = this.Model.Equipments.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+@using StayFit.Data.Models.Enums
+
+@*<h1>@this.ViewData["Title"]</h1>*@
+
+<div class="container">
+    <div class="card">
+        <form asp-action="Search" method="get" class="border border-light p-3">
+            <button type="submit" class="btn btn-light btn-lg btn-block">
+                <h3 class="py-4">
+                    <strong>Search exercises</strong>
+                </h3>
+            </button>
+            <div class="form-row">
+                <div class="col-md-12 form-group btn-lg btn-block">
+                    <label asp-for="Name" class="font-weight-bold"></label>
+                    <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter exercise name" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 form-group">
+                    <label asp-for="BodyPart" class="font-weight-bold"></label>
+                    <select asp-for="BodyPart" class="form-control" asp-items="@Html.GetEnumSelectList<BodyPart>()">
+                        <option hidden="hidden">Choose body part</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label asp-for="ExerciseType" class="font-weight-bold"></label>
+                    <select asp-for="ExerciseType" class="form-control" asp-items="@Html.GetEnumSelectList<ExerciseType>()">
+                        <option hidden="hidden">Choose type</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 form-group">
+                    <label asp-for="Difficulty" class="font-weight-bold"></label>
+                    <select asp-for="Difficulty" class="form-control" asp-items="@Html.GetEnumSelectList<Difficulty>()">
+                        <option hidden="hidden">Choose difficulty</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label asp-for="EquipmentId" class="font-weight-bold"></label>
+                    <select asp-for="EquipmentId" class="form-control" asp-items="equipments">
+                        <option hidden="hidden">All</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View all our exercises</h5>
+                    <p class="card-text">You can see a different exercises and more information about each one.</p>
+                    <a asp-action="All" class="btn btn-primary">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Track your daily exercises</h5>
+                    <p class="card-text">When you enter your workouts daily, you can easily track your progress on different exercises.</p>
+                    <a asp-action="Workput" class="btn btn-primary">Create</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,22 +1,25 @@
 ﻿namespace StayFit.Web.ViewModels.Exercises
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using StayFit.Data.Models.Enums;
-    using StayFit.Web.ViewModels.Pages;
 
-    public class ExercisesListViewModel : PagingViewModel
+    public class SearchExerciseInputModel
     {
-        public IEnumerable<ExerciseViewModel> Exercises { get; set; }
-
         public string Name { get; set; }
 
+        [Display(Name = "Body Part")]
         public BodyPart BodyPart { get; set; }
 
         public Difficulty Difficulty { get; set; }
 
+        [Display(Name = "Exercise Type")]
         public ExerciseType ExerciseType { get; set; }
 
+        [Display(Name = "Equipment")]
         public int EquipmentId { get; set; }
+
+        public IEnumerable<EquipmentViewModel> Equipments { get; set; }
     }
 }

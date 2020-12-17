@@ -1,0 +1,22 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExercisesListViewModel
+@{
+    this.ViewData["Title"] = "Seaeched Exercises";
+}
+<div class="col-md-8">
+    @foreach (var exercise in Model.Exercises)
+    {
+        <div class="media border mt-1">
+            <a asp-action="Details" asp-route-id="@exercise.Id">
+                <img class="align-self-center mr-3 img-fluid" width="185" src="@exercise.ImageUrl" alt="@exercise.Name">
+            </a>
+            <div class="media-body">
+                <h5 class="mt-0"><a asp-action="Details" asp-route-id="@exercise.Id">@exercise.Name</a></h5>
+                <p>Muscle Targeted: @exercise.BodyPart</p>
+                <p>Equipment Type: @exercise.EquipmentName</p>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+<partial name="_ExercisesSearchPaginPartial" model="@Model" />

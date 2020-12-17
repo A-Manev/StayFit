@@ -66,8 +66,7 @@ $("body").on("click", "#btnSave", function () {
     var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
 
     $.ajax({
-        url: "/api/Workouts",
-        //url: "/Exercises/Workouts",
+        url: "/Exercises/Workout",
         type: "POST",
         data: JSON.stringify(exercises),
         headers: {
@@ -76,9 +75,6 @@ $("body").on("click", "#btnSave", function () {
         success: function (r) {
             //alert(r + " record(s) inserted.");
             //ocation.reload();
-
-            var url = "https://localhost:44319/";
-            $(location).attr('href', "/");
         },
         contentType: 'application/json',
     });

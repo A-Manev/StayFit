@@ -6,6 +6,7 @@
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
     using StayFit.Services.Mapping;
+    using StayFit.Web.ViewModels.Exercises;
 
     public class ExercisesService : IExercisesService
     {
@@ -47,6 +48,39 @@
                .OrderBy(x => x.Name)
                .To<T>()
                .ToList();
+        }
+
+        public (IEnumerable<T> Exercises, int Count) GetAllSearched<T>(SearchExerciseInputModel input, int page, int itemsPerPage = 15)
+        {
+            var query = this.exerciseRepository.All().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(input.Name))
+            {
+                query = query.Where(x => x.Name.Contains(input.Name));
+            }
+
+            if (input.BodyPart != 0)
+            {
+                query = query.Where(x => x.BodyPart == input.BodyPart);
+            }
+
+            if (input.EquipmentId != 0)
+            {
+                query = query.Where(x => x.Equipment.Id == input.EquipmentId);
+            }
+
+            if (input.Difficulty != 0)
+            {
+                query = query.Where(x => x.Difficulty == input.Difficulty);
+            }
+
+            if (input.ExerciseType != 0)
+            {
+                query = query.Where(x => x.ExerciseType == input.ExerciseType);
+            }
+
+            return (query.OrderByDescending(x => x.Id)
+               .Skip((page - 1) * itemsPerPage).Take(itemsPerPage).To<T>().ToList(), query.ToList().Count);
         }
     }
 }

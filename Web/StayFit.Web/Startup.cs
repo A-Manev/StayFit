@@ -83,6 +83,7 @@
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ILikesService, LikesService>();
             services.AddTransient<IWorkoutService, WorkoutService>();
+            services.AddTransient<IEquipmentService, EquipmentService>();
 
             services.AddHangfire(x => x.UseSqlServerStorage(this.configuration.GetConnectionString("DefaultConnection")));
             services.AddHangfireServer();

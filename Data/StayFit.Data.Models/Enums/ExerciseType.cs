@@ -4,7 +4,7 @@
 
     public enum ExerciseType
     {
-        Undefined = 0,
+        // Undefined = 0,
         Cardio = 1,
         Hypertrophy = 2,
         [Display(Name = "Olympic Weightliftin")]

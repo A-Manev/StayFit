@@ -2,7 +2,7 @@
 {
     public enum BodyPart
     {
-        Undefined = 0,
+        // Undefined = 0,
         Neck = 1,
         Traps = 2,
         Shoulders = 3,
