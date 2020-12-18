@@ -1,19 +1,26 @@
 ﻿namespace StayFit.Services.Data
 {
+    using System;
+    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
     using StayFit.Data.Models.Enums;
     using StayFit.Services.Mapping;
+    using StayFit.Web.ViewModels.Users;
 
     public class UsersService : IUsersService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "png" };
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IRepository<Image> imageRepository;
 
-        public UsersService(IDeletableEntityRepository<ApplicationUser> userRepository)
+        public UsersService(IDeletableEntityRepository<ApplicationUser> userRepository, IRepository<Image> imageRepository)
         {
             this.userRepository = userRepository;
+            this.imageRepository = imageRepository;
         }
 
         public double CalculateUserCalories(ApplicationUser user)
@@ -112,6 +119,38 @@
                 .Where(x => x.Id == userId)
                 .To<T>()
                 .FirstOrDefault();
+        }
+
+        public async Task UploadImageAsync(HomePageUserViewModel inputModel, string userId, string imagePath)
+        {
+            var user = this.userRepository.AllAsNoTracking().Where(x => x.Id == userId).FirstOrDefault();
+
+            Directory.CreateDirectory($"{imagePath}/users/");
+
+            var extension = Path.GetExtension(inputModel.Image.FileName).TrimStart('.');
+
+            if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+            {
+                throw new Exception($"Invalid image extension {extension}");
+            }
+
+            var newImage = new Image
+            {
+                AddedByUserId = userId,
+                Extension = extension,
+                MealId = 400,
+            };
+
+            await this.imageRepository.AddAsync(newImage);
+            await this.imageRepository.SaveChangesAsync();
+
+            user.Images.Add(newImage);
+
+            var physicalPath = $"{imagePath}/users/{newImage.Id}.{extension}";
+            using var fileStream = new FileStream(physicalPath, FileMode.Create);
+            await inputModel.Image.CopyToAsync(fileStream);
+
+            await this.userRepository.SaveChangesAsync();
         }
     }
 }
