@@ -3,7 +3,6 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
 
-    using Hangfire;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -49,8 +48,6 @@
             if (this.User.Identity.IsAuthenticated)
             {
                 var user = await this.userManager.GetUserAsync(this.User);
-
-                RecurringJob.AddOrUpdate(() => this.homeService.ChangeUserCalories(user.Id), Cron.Daily());
 
                 var viewModel = this.homeService.GetUserInfo<HomePageUserViewModel>(user.Id);
 
