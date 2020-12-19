@@ -32,7 +32,7 @@
 
             await this.diariesService.AddMealToDiaryAsync(mealId, user.Id, quantity);
 
-            return this.Redirect("/");
+            return this.Redirect(nameof(this.FoodDiary));
         }
 
         [Authorize]
@@ -55,9 +55,10 @@
 
             var viewModel = new FoodDiaryListViewModel
             {
-                Diary = this.diariesService.GetUserFoodDiary<FoodDiaryInListViewModel>(user.Id, currentDate),
                 CurrentDate = currentDate,
                 User = this.usersService.GetById<UserCaloriesGoalViewModel>(user.Id),
+                Diary = this.diariesService.GetUserFoodDiary<FoodDiaryInListViewModel>(user.Id, currentDate),
+                RecentMeals = this.diariesService.GetUserRecentMeals<FoodDiaryInListViewModel>(user.Id),
             };
 
             return this.View(viewModel);

@@ -102,6 +102,17 @@
                 .ToList();
         }
 
+        public IEnumerable<T> GetUserRecentMeals<T>(string userId)
+        {
+            return this.mealsDiaryRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(20)
+                .To<T>()
+                .ToList();
+        }
+
         public IEnumerable<T> GetUserWorkoutDiary<T>(string userId, DateTime date)
         {
             return this.workoutExerciseRepository

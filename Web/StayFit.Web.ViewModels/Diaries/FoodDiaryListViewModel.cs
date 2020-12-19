@@ -12,5 +12,7 @@
         public IEnumerable<FoodDiaryInListViewModel> Diary { get; set; }
 
         public UserCaloriesGoalViewModel User { get; set; }
+
+        public IEnumerable<FoodDiaryInListViewModel> RecentMeals { get; set; }
     }
 }

@@ -37,7 +37,6 @@
                 <th scope="col">Protein</th>
                 <th scope="col">Carbs</th>
                 <th scope="col">Fat</th>
-                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -62,21 +61,21 @@
                 </tr>
             }
 
-            <tr style="background-color:aquamarine">
+            <tr style="background-color:#dbf0f9">
                 <th scope="row">Total:</th>
                 <td scope="row">@Math.Round(totalCalories)</td>
                 <td scope="row">@Math.Round(totalProtein)</td>
                 <td scope="row">@Math.Round(totalCarbs)</td>
                 <td scope="row">@Math.Round(totalFat)</td>
             </tr>
-            <tr style="background-color:aquamarine">
+            <tr style="background-color:#dbf0f9">
                 <th scope="row">Your Daily Goal:</th>
                 <td scope="row">@Math.Round(Model.User.DailyCalories)</td>
                 <td scope="row">@Math.Round(Model.User.Protein)</td>
                 <td scope="row">@Math.Round(Model.User.Carbs)</td>
                 <td scope="row">@Math.Round(Model.User.Fat)</td>
             </tr>
-            <tr style="background-color:aquamarine">
+            <tr style="background-color:#dbf0f9">
                 <th scope="row">Remaining:</th>
                 <td scope="row">@Math.Round(Model.User.DailyCalories - totalCalories)</td>
                 <td scope="row">@Math.Round(Model.User.Protein - totalProtein)</td>
@@ -87,4 +86,33 @@
     </table>
 
     <a class="btn btn-primary" asp-controller="Meals" asp-action="All" role="button">Add Food</a>
+
+    <h4 class="mt-2"><strong><i class="fas fa-caret-down"></i> Recently added Meals <i class="fas fa-caret-down"></i></strong></h4>
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Name and Quantity</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Carbs</th>
+                <th scope="col">Fat</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in Model.RecentMeals)
+            {
+                <tr>
+                    <th scope="row">@meal.MealName, @(meal.MealQuantity * 100)g</th>
+                    <td>@Math.Round(meal.MealKCal * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealProtein * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealCarbs * meal.MealQuantity)</td>
+                    <td>@Math.Round(meal.MealFat * meal.MealQuantity)</td>
+                    <td><a data-id="@meal.MealId" class="select-Quantity btn btn-success text-sm-right float-right" data-toggle="modal" data-target="#modalQuantity"><i class="fas fa-plus"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <partial name="_ModalPartial" />
 </div>

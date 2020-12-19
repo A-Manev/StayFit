@@ -7,6 +7,8 @@
     {
         public int Id { get; set; }
 
+        public int MealId { get; set; }
+
         public double MealQuantity { get; set; }
 
         public string MealName { get; set; }

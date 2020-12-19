@@ -10,6 +10,8 @@
 
         IEnumerable<T> GetUserFoodDiary<T>(string userId, DateTime date);
 
+        IEnumerable<T> GetUserRecentMeals<T>(string userId);
+
         Task DeleteMealFromDiaryAsync(int mealId, string userId);
 
         IEnumerable<T> GetUserWorkoutDiary<T>(string userId, DateTime date);

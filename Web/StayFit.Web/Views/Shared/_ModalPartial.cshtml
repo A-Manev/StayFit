@@ -1,0 +1,25 @@
+﻿<form asp-controller="Diaries" asp-action="Add" method="get">
+    <div class="modal fade" id="modalQuantity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add to Your Diary</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="mealId" id="mealId" value="" />
+                </div>
+                <div class="row-cols-2 form-group offset-1">
+                    <label for="quantity">Select product quantity</label>
+                    <input class="form-control" type="number" step="any" min="0.01" max="100" name="quantity" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Add to Diary</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
