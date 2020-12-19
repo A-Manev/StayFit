@@ -6,6 +6,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using StayFit.Data.Seeding.CustomSeeders;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
@@ -27,7 +28,10 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+
                               new CategorySeeder(),
+                              new UsersSeeder(),
+                              new UsersToRolesSeeder(),
                           };
 
             foreach (var seeder in seeders)
