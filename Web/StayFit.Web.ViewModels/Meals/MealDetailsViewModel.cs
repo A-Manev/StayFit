@@ -59,7 +59,9 @@
 
         public IEnumerable<MealCommentViewModel> Comments { get; set; }
 
-        public string SanitizedContent => new HtmlSanitizer().Sanitize(this.MethodOfPreparation);
+        public string SanitizedMethodOfPreparation => new HtmlSanitizer().Sanitize(this.MethodOfPreparation);
+
+        public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
 
         public IEnumerable<IngredientsViewModel> Ingredients { get; set; }
 
