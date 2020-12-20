@@ -3,8 +3,25 @@
     this.ViewData["Title"] = "Admin dashboard";
 }
 
-<h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+<h1 class=" text-center">@this.ViewData["Title"]</h1>
 
-<a asp-area="Administration" asp-controller="HangFire" asp-action="Index" class="nav-link" role="tab" aria-controls="v-pills-comments" aria-selected="false">HangFire</a>
-<a asp-area="Administration" asp-controller="Exercises" asp-action="All" class="nav-link" role="tab" aria-controls="v-pills-comments" aria-selected="false">Exercises</a>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">HangFire section</h5>
+                <p class="card-text">Everything about HangFire</p>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="HangFire" asp-action="Index" role="tab" aria-controls="v-pills-comments" aria-selected="false">HangFire</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Exercises section</h5>
+                <p class="card-text">You can see all exercise details, add more, update and delete.</p>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="Exercises" asp-action="All" role="tab" aria-controls="v-pills-comments" aria-selected="false">Exercises</a>
+            </div>
+        </div>
+    </div>
+</div>
