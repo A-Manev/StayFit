@@ -1,0 +1,65 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExercisesAdministrationListViewModel
+
+@{
+    this.ViewData["Title"] = "All Exercises";
+}
+
+<div class="container">
+    <h1> @this.ViewData["Title"]</h1>
+
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    IsDeleted
+                </th>
+                <th>
+                    DeletedOn
+                </th>
+                <th>
+                    CreatedOn
+                </th>
+                <th>
+                    ModifiedOn
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exercise in Model.Exercises)
+            {
+                <tr>
+                    <td>
+                        @exercise.Name
+                    </td>
+                    <td>
+                        @exercise.IsDeleted
+                    </td>
+                    <td>
+                        @exercise.DeletedOn
+                    </td>
+                    <td>
+                        @exercise.CreatedOn
+                    </td>
+                    <td>
+                        @exercise.ModifiedOn
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@exercise.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@exercise.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@exercise.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+    <partial name="_PagingPartial" model="@Model" />
+</div>

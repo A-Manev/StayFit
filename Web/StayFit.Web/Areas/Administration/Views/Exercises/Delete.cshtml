@@ -1,0 +1,93 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExerciseAdministrationDetailsViewModel
+@{
+    this.ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+    <h1>@this.ViewData["Title"]</h1>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Name
+            </dt>
+            <dd class="col-sm-10">
+                <h3><strong>@Model.Name</strong></h3>
+            </dd>
+            <dt class="col-sm-2">
+                ImageUrl
+            </dt>
+            <dd class="col-sm-10">
+                <img class="m-2 mt-3 rounded img-fluid" src="@Model.ImageUrl" alt="@Model.Name" width="400">
+            </dd>
+            <dt class="col-sm-2">
+                Body Part
+            </dt>
+            <dd class="col-sm-10">
+                @Model.BodyPart
+            </dd>
+            <dt class="col-sm-2">
+                Difficulty
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Difficulty
+            </dd>
+            <dt class="col-sm-2">
+                Exercise Type
+            </dt>
+            <dd class="col-sm-10">
+                @Model.ExerciseType
+            </dd>
+            <dt class="col-sm-2">
+                Equipment
+            </dt>
+            <dd class="col-sm-10">
+                @Model.EquipmentName
+            </dd>
+            <dt class="col-sm-2">
+                Description
+            </dt>
+            <dd class="col-sm-10">
+                @Html.Raw(Model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                Benefits
+            </dt>
+            <dd class="col-sm-10">
+                @Html.Raw(Model.Benefits)
+            </dd>
+            <dt class="col-sm-2">
+                IsDeleted
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.IsDeleted)
+            </dd>
+            <dt class="col-sm-2">
+                DeletedOn
+            </dt>
+            <dd class="col-sm-10">
+                @Model.DeletedOn
+            </dd>
+            <dt class="col-sm-2">
+                CreatedOn
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CreatedOn
+            </dd>
+            <dt class="col-sm-2">
+                ModifiedOn
+            </dt>
+            <dd class="col-sm-10">
+                @Model.ModifiedOn
+            </dd>
+        </dl>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-info" asp-action="All">Back to List</a>
+        </form>
+    </div>
+</div>

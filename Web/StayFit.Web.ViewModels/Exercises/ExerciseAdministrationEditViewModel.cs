@@ -1,11 +1,13 @@
 ﻿namespace StayFit.Web.ViewModels.Exercises
 {
-    using Ganss.XSS;
+    using System;
+    using System.Collections.Generic;
+
     using StayFit.Data.Models;
     using StayFit.Data.Models.Enums;
     using StayFit.Services.Mapping;
 
-    public class ExerciseDetailsViewModel : IMapFrom<Exercise>
+    public class ExerciseAdministrationEditViewModel : IMapFrom<Exercise>
     {
         public int Id { get; set; }
 
@@ -23,10 +25,16 @@
 
         public string Benefits { get; set; }
 
-        public string EquipmentName { get; set; }
+        public bool IsDeleted { get; set; }
 
-        public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
+        public DateTime? DeletedOn { get; set; }
 
-        public string SanitizedBenefits => new HtmlSanitizer().Sanitize(this.Benefits);
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public int EquipmentId { get; set; }
+
+        public IEnumerable<EquipmentViewModel> Equipments { get; set; }
     }
 }

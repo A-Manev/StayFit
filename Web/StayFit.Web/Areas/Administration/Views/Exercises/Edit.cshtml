@@ -1,0 +1,105 @@
+﻿@model StayFit.Web.ViewModels.Exercises.ExerciseAdministrationEditViewModel
+
+@{
+    this.ViewData["Title"] = "Edit";
+    var equipments = this.Model.Equipments.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+@using StayFit.Data.Models.Enums
+
+<div class="container">
+    <h1>@this.ViewData["Title"]</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BodyPart" class="control-label"></label>
+                    <select asp-for="BodyPart" class="form-control" asp-items="@Html.GetEnumSelectList<BodyPart>()"></select>
+                    <span asp-validation-for="BodyPart" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Difficulty" class="control-label"></label>
+                    <select asp-for="Difficulty" class="form-control" asp-items="@Html.GetEnumSelectList<Difficulty>()"></select>
+                    <span asp-validation-for="Difficulty" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExerciseType" class="control-label"></label>
+                    <select asp-for="ExerciseType" class="form-control" asp-items="@Html.GetEnumSelectList<ExerciseType>()"></select>
+                    <span asp-validation-for="ExerciseType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control edit-with-tinymce"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Benefits" class="control-label"></label>
+                    <textarea asp-for="Benefits" class="form-control edit-with-tinymce"></textarea>
+                    <span asp-validation-for="Benefits" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EquipmentId" class="control-label"></label>
+                    <select asp-for="EquipmentId" class="form-control" asp-items="equipments"></select> 
+                    <span asp-validation-for="EquipmentId" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DeletedOn" class="control-label"></label>
+                    <input asp-for="DeletedOn" class="form-control" />
+                    <span asp-validation-for="DeletedOn" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="CreatedOn" class="control-label"></label>
+                    <input asp-for="CreatedOn" class="form-control" />
+                    <span asp-validation-for="CreatedOn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModifiedOn" class="control-label"></label>
+                    <input asp-for="ModifiedOn" class="form-control" />
+                    <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-info" asp-action="All">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea.edit-with-tinymce",
+            relative_urls: false,
+            remove_script_host: false,
+            convert_urls: true,
+            plugins: [
+                "image paste table link code media fullscreen wordcount searchreplace lists"
+            ]
+        });
+    </script>
+}

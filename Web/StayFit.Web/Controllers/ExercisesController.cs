@@ -54,9 +54,19 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return this.NotFound();
+            }
+
             var viewModel = this.exercisesService.GetExerciseDetails<ExerciseDetailsViewModel>(id);
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }

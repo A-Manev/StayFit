@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
@@ -27,7 +28,7 @@
                 .ToList();
         }
 
-        public T GetExerciseDetails<T>(int id)
+        public T GetExerciseDetails<T>(int? id)
         {
             return this.exerciseRepository
                 .AllAsNoTracking()
@@ -81,6 +82,72 @@
 
             return (query.OrderByDescending(x => x.Id)
                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage).To<T>().ToList(), query.ToList().Count);
+        }
+
+        public async Task CreateAsync(CreateExerciseAdministratioInputModel inputModel)
+        {
+            var exercise = new Exercise
+            {
+                Name = inputModel.Name,
+                EquipmentId = inputModel.EquipmentId,
+                Benefits = inputModel.Benefits,
+                BodyPart = inputModel.BodyPart,
+                Description = inputModel.Description,
+                Difficulty = inputModel.Difficulty,
+                ExerciseType = inputModel.ExerciseType,
+                ImageUrl = inputModel.ImageUrl,
+            };
+
+            await this.exerciseRepository.AddAsync(exercise);
+            await this.exerciseRepository.SaveChangesAsync();
+        }
+
+        public T GetById<T>(int? id)
+        {
+            return this.exerciseRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public async Task UpdateAsync(ExerciseAdministrationEditViewModel inputModel)
+        {
+            var exercise = this.exerciseRepository.All().FirstOrDefault(x => x.Id == inputModel.Id);
+
+            exercise.Name = inputModel.Name;
+            exercise.ImageUrl = inputModel.ImageUrl;
+            exercise.Description = inputModel.Description;
+            exercise.BodyPart = inputModel.BodyPart;
+            exercise.Difficulty = inputModel.Difficulty;
+            exercise.ExerciseType = inputModel.ExerciseType;
+            exercise.Benefits = inputModel.Benefits;
+            exercise.IsDeleted = inputModel.IsDeleted;
+            exercise.DeletedOn = inputModel.DeletedOn;
+            exercise.CreatedOn = inputModel.CreatedOn;
+            exercise.ModifiedOn = inputModel.ModifiedOn;
+            exercise.EquipmentId = inputModel.EquipmentId;
+
+            this.exerciseRepository.Update(exercise);
+            await this.exerciseRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var exercise = this.exerciseRepository.All().FirstOrDefault(x => x.Id == id);
+
+            this.exerciseRepository.Delete(exercise);
+            await this.exerciseRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAllWithDeleted<T>(int page, int itemsPerPage = 20)
+        {
+            return this.exerciseRepository
+               .AllWithDeleted()
+               .Skip((page - 1) * itemsPerPage)
+               .Take(itemsPerPage)
+               .To<T>()
+               .ToList();
         }
     }
 }
