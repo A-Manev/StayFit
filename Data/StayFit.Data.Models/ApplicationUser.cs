@@ -3,6 +3,7 @@ namespace StayFit.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Identity;
     using StayFit.Data.Common.Models;
@@ -38,8 +39,12 @@ namespace StayFit.Data.Models
         public DateTime? DeletedOn { get; set; }
 
         // User extend
+        [Required]
+        [MaxLength(25)]
         public string FirstName { get; set; }
 
+        [Required]
+        [MaxLength(25)]
         public string LastName { get; set; }
 
         public int Age { get; set; }

@@ -1,6 +1,7 @@
 ﻿namespace StayFit.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using StayFit.Data.Common.Models;
     using StayFit.Data.Models.Enums;
@@ -17,16 +18,21 @@
             this.UsersMealsDiary = new HashSet<MealDiary>();
         }
 
+        [Required]
+        [MinLength(3)]
         public string Name { get; set; }
 
         public string ImageUrl { get; set; }
 
+        [Required]
         public string PreparationTime { get; set; }
 
+        [Required]
         public string CookingTime { get; set; }
 
         public SkillLevel SkillLevel { get; set; }
 
+        [Required]
         public string PortionCount { get; set; }
 
         public double KCal { get; set; }
@@ -47,6 +53,7 @@
 
         public string Description { get; set; }
 
+        [Required]
         public string MethodOfPreparation { get; set; }
 
         public int CategoryId { get; set; }

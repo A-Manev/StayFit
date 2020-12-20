@@ -1,6 +1,7 @@
 ﻿namespace StayFit.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using StayFit.Data.Common.Models;
     using StayFit.Data.Models.Enums;
@@ -12,8 +13,11 @@
             this.Workouts = new HashSet<WorkoutExercise>();
         }
 
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public string ImageUrl { get; set; }
 
         public string VideoUrl { get; set; }
