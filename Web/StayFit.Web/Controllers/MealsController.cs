@@ -71,7 +71,7 @@
                 return this.View(viewModel);
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.All));
         }
 
         public IActionResult CategorySubCategories(int categoryId)

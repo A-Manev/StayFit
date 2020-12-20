@@ -75,6 +75,7 @@ $("body").on("click", "#btnSave", function () {
         success: function (r) {
             //alert(r + " record(s) inserted.");
             //ocation.reload();
+            window.location = "https://localhost:44319/Diaries/WorkoutDiary";
         },
         contentType: 'application/json',
     });
