@@ -1,5 +1,6 @@
 ﻿namespace StayFit.Web.ViewModels.Users
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
@@ -7,6 +8,7 @@
     using Microsoft.AspNetCore.Http;
     using StayFit.Data.Models;
     using StayFit.Services.Mapping;
+    using StayFit.Web.ViewModels.Home;
 
     public class HomePageUserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
@@ -20,6 +22,8 @@
 
         [Required(ErrorMessage = "Add at least one image.")]
         public IFormFile Image { get; set; }
+
+        public IEnumerable<HomePageMealsViewModel> RandomMeals { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

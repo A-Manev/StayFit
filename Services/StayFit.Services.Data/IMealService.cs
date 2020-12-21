@@ -16,5 +16,7 @@
         T GetMealDetails<T>(int mealId);
 
         (IEnumerable<T> Meals, int Count) GetAllSearched<T>(SearchMealInputModel input, int page, int itemsPerPage = 15);
+
+        IEnumerable<T> GetRandom<T>(int count);
     }
 }

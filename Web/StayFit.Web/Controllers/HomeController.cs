@@ -11,6 +11,7 @@
     using StayFit.Services;
     using StayFit.Services.Data;
     using StayFit.Web.ViewModels;
+    using StayFit.Web.ViewModels.Home;
     using StayFit.Web.ViewModels.Users;
 
     public class HomeController : BaseController
@@ -19,31 +20,34 @@
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IExerciseScraperService scraperService;
-        private readonly IMealScraperService mealService;
+        private readonly IMealScraperService mealScraperService;
         private readonly IUsersService usersService;
         private readonly IWebHostEnvironment environment;
+        private readonly IMealService mealService;
 
         public HomeController(
             IHomeService homeService,
             UserManager<ApplicationUser> userManager,
             IExerciseScraperService scraperService,
-            IMealScraperService mealService,
+            IMealScraperService mealScraperService,
             IUsersService usersService,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            IMealService mealService)
         {
             this.homeService = homeService;
             this.userManager = userManager;
 
             this.scraperService = scraperService;
-            this.mealService = mealService;
+            this.mealScraperService = mealScraperService;
             this.usersService = usersService;
             this.environment = environment;
+            this.mealService = mealService;
         }
 
         public async Task<IActionResult> Index()
         {
             // Move to administration area.
-            // await this.mealService.PopulateDbWithMeal(2);
+            // await this.mealScraperService.PopulateDbWithMeal(2);
             // await this.scraperService.PopulateDbWithExercises(2);
             if (this.User.Identity.IsAuthenticated)
             {
@@ -55,7 +59,11 @@
             }
             else
             {
-                return this.View();
+                var viewModel = new HomePageUserViewModel();
+
+                viewModel.RandomMeals = this.mealService.GetRandom<HomePageMealsViewModel>(3);
+
+                return this.View(viewModel);
             }
         }
 

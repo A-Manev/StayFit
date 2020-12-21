@@ -163,5 +163,15 @@
             return (query.OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage).To<T>().ToList(), query.ToList().Count);
         }
+
+        public IEnumerable<T> GetRandom<T>(int count)
+        {
+            return this.mealRepository
+                .AllAsNoTracking()
+                .OrderBy(x => Guid.NewGuid())
+                .Take(count)
+                .To<T>()
+                .ToList();
+        }
     }
 }

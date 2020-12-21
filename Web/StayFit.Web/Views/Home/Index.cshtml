@@ -4,9 +4,9 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="form container">
+<div class="form container">
+    @if (User.Identity.IsAuthenticated)
+    {
         <form method="post" asp-action="UploadUserImage" class="border border p-2 rounded mx-auto d-block" enctype="multipart/form-data">
             <div class="card-header text-white py-2 bg-primary" @*style=" background: #9c4be6"*@>
                 <div class="row">
@@ -94,12 +94,44 @@
                 </div>
             </div>
         </form>
-    </div>
-}
-else
-{
-    <div class="text-center">
-        <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    </div>
-}
+    }
+    else
+    {
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 font-weight-normal">Welcome to @GlobalConstants.SystemName!</h1>
+                <p class="lead font-weight-normal">Take control of your goals. Track calories, break down ingredients, and log activities with StayFit.</p>
+                <a class="btn btn-outline-primary" href="/Identity/Account/Register">Register now</a>
+            </div>
+            <div class="product-device box-shadow d-none d-md-block"></div>
+            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+        </div>
+
+        <h2 class="bold text-center">Meals & Inspiration</h2>
+        <p class="bold text-center">
+            Get nutritionist-approved recipes and motivational workout tips from StayFit experts.
+        </p>
+
+        <div class="row">
+            @foreach (var meal in Model.RandomMeals)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow p-2">
+                        <a asp-controller="Meals" asp-action="MealDetails" asp-route-id="@meal.Id">
+                            <img class="img-top img-fluid rounded" src="@meal.ImageUrl" alt="@meal.Name">
+                        </a>
+                        <h4 class="card-title row-cols-6 text-truncate mt-1"><a asp-controller="Meals" asp-action="MealDetails" asp-route-id="@meal.Id">@meal.Name</a></h4>
+                        <div class="card-body">
+                            <p class="card-text">@meal.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Meals" asp-action="MealDetails" asp-route-id="@meal.Id" type="button" class="btn btn-sm btn-outline-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
