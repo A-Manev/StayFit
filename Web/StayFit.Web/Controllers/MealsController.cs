@@ -1,6 +1,7 @@
 ﻿namespace StayFit.Web.Controllers
 {
     using System;
+    using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,8 @@
     using Microsoft.AspNetCore.Mvc;
     using StayFit.Data.Models;
     using StayFit.Services.Data;
+    using StayFit.Services.Messaging;
+    using StayFit.Services.ViewRender;
     using StayFit.Web.ViewModels.Meals;
 
     public class MealsController : Controller
@@ -18,19 +21,25 @@
         private readonly ISubCategoriesService subCategoriesService;
         private readonly IMealService mealService;
         private readonly IWebHostEnvironment environment;
+        private readonly IEmailSender emailSender;
+        private readonly IViewRenderService viewRenderService;
 
         public MealsController(
             UserManager<ApplicationUser> userManager,
             ICategoriesService categoriesService,
             ISubCategoriesService subCategoriesService,
             IMealService mealService,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            IEmailSender emailSender,
+            IViewRenderService viewRenderService)
         {
             this.userManager = userManager;
             this.categoriesService = categoriesService;
             this.subCategoriesService = subCategoriesService;
             this.mealService = mealService;
             this.environment = environment;
+            this.emailSender = emailSender;
+            this.viewRenderService = viewRenderService;
         }
 
         [Authorize]
@@ -148,6 +157,20 @@
             };
 
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendToEmail(int id)
+        {
+            // var html = this.viewRenderService.RenderToStringAsync(nameof(this.MealDetails), new Meal());
+
+            var meal = this.mealService.GetMealDetails<MealInListViewModel>(id);
+            var html = new StringBuilder();
+            html.AppendLine($"<h1>{meal.Name}</h1>");
+            html.AppendLine($"<h3>{meal.CategoryName}</h3>");
+            html.AppendLine($"<img src=\"{meal.ImageUrl}\" />");
+            await this.emailSender.SendEmailAsync("trainsleepeatandstayfit@gmail.com", "StayFit", "sashopro13@gmail.com", meal.Name, html.ToString());
+            return this.RedirectToAction(nameof(this.MealDetails), new { id });
         }
     }
 }

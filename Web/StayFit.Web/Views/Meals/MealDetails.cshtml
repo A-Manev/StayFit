@@ -109,6 +109,11 @@
         <div class="col-sm">
             <div class="form-row m-4">
                 <h3>@Model.Name</h3>
+                <div class="col float-right">
+                    <form method="post" asp-action="SendToEmail" asp-route-id="@Model.Id">
+                        <button class="btn btn-warning">Send to my email</button>
+                    </form>
+                </div>
             </div>
             <div class="form-row">
                 <ul style="list-style-type: none;">

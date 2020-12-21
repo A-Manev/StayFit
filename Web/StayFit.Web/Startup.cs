@@ -26,6 +26,7 @@
     using StayFit.Services.HangFire.UpdateUserCalories;
     using StayFit.Services.Mapping;
     using StayFit.Services.Messaging;
+    using StayFit.Services.ViewRender;
     using StayFit.Web.ViewModels;
 
     public class Startup
@@ -87,7 +88,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IExerciseScraperService, ExerciseScraperService>();
             services.AddTransient<IMealScraperService, MealScraperService>();
@@ -103,6 +104,7 @@
             services.AddTransient<ILikesService, LikesService>();
             services.AddTransient<IWorkoutService, WorkoutService>();
             services.AddTransient<IEquipmentService, EquipmentService>();
+            services.AddTransient<IViewRenderService, ViewRenderService>();
 
             // Add Antiforgery
             services.AddAntiforgery(options =>
