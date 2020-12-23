@@ -38,7 +38,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.commentsService.Create(inputModel.MealId, user.Id, inputModel.Content, parentId);
+            await this.commentsService.CreateAsync(inputModel.MealId, user.Id, inputModel.Content, parentId);
 
             return this.RedirectToAction("MealDetails", "Meals", new { id = inputModel.MealId });
         }

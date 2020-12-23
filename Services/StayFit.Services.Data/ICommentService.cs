@@ -4,7 +4,7 @@
 
     public interface ICommentService
     {
-        Task Create(int mealId, string userId, string content, int? parentId = null);
+        Task CreateAsync(int mealId, string userId, string content, int? parentId = null);
 
         bool IsInMealId(int commentId, int mealId);
     }

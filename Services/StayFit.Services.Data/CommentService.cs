@@ -15,7 +15,7 @@
             this.commentsRepository = commentsRepository;
         }
 
-        public async Task Create(int mealId, string userId, string content, int? parentId = null)
+        public async Task CreateAsync(int mealId, string userId, string content, int? parentId = null)
         {
             var comment = new Comment
             {
