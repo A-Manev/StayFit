@@ -16,7 +16,6 @@
 
     public class HomeController : BaseController
     {
-        private readonly IHomeService homeService;
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IExerciseScraperService scraperService;
@@ -26,7 +25,6 @@
         private readonly IMealService mealService;
 
         public HomeController(
-            IHomeService homeService,
             UserManager<ApplicationUser> userManager,
             IExerciseScraperService scraperService,
             IMealScraperService mealScraperService,
@@ -34,7 +32,6 @@
             IWebHostEnvironment environment,
             IMealService mealService)
         {
-            this.homeService = homeService;
             this.userManager = userManager;
 
             this.scraperService = scraperService;
@@ -53,7 +50,7 @@
             {
                 var user = await this.userManager.GetUserAsync(this.User);
 
-                var viewModel = this.homeService.GetUserInfo<HomePageUserViewModel>(user.Id);
+                var viewModel = this.usersService.GetById<HomePageUserViewModel>(user.Id);
 
                 return this.View(viewModel);
             }
