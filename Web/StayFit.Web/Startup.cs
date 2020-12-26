@@ -158,6 +158,7 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute("calendar", "{controller=Home}/{action=Index}/{year}/{month}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
                         endpoints.MapRazorPages();

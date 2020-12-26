@@ -1,5 +1,6 @@
 ﻿namespace StayFit.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@
     using StayFit.Data.Models;
     using StayFit.Services.Data;
     using StayFit.Web.ViewModels.Exercises;
+    using StayFit.Web.ViewModels.Scheduler;
 
     public class ExercisesController : BaseController
     {
@@ -123,6 +125,32 @@
             };
 
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Scheduler([FromRoute] int year, int month)
+        {
+            if (month < 1)
+            {
+                year--;
+                month = 12;
+            }
+            else if (month > 12)
+            {
+                year++;
+                month = 1;
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var events = new SchedulerViewModel
+            {
+                Events = this.workoutService.GetEvents(user.Id),
+                Month = month,
+                Year = year,
+            };
+
+            return this.View(events);
         }
     }
 }

@@ -8,6 +8,7 @@
     using StayFit.Data.Common.Repositories;
     using StayFit.Data.Models;
     using StayFit.Web.ViewModels.Exercises;
+    using StayFit.Web.ViewModels.Scheduler;
 
     public class WorkoutService : IWorkoutService
     {
@@ -29,7 +30,7 @@
         {
             var workout = new Workout
             {
-                Name = "Test Workout Name",
+                Name = "Workout Day",
                 UserId = userId,
             };
 
@@ -62,6 +63,23 @@
 
             await this.workoutRepository.SaveChangesAsync();
             await this.workoutExerciseRepository.SaveChangesAsync();
+        }
+
+        public List<CalendarEvent> GetEvents(string userId)
+        {
+            var workouts = this.workoutRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedOn)
+                .Select(x => new CalendarEvent
+                {
+                    Title = x.Name,
+                    Date = x.CreatedOn.Date,
+                    Type = "primary",
+                })
+                .ToList();
+
+            return workouts;
         }
     }
 }
