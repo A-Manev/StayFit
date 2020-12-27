@@ -160,16 +160,19 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SendToEmail(int id)
         {
             // var html = this.viewRenderService.RenderToStringAsync(nameof(this.MealDetails), new Meal());
+
+            var user = await this.userManager.GetUserAsync(this.User);
 
             var meal = this.mealService.GetMealDetails<MealInListViewModel>(id);
             var html = new StringBuilder();
             html.AppendLine($"<h1>{meal.Name}</h1>");
             html.AppendLine($"<h3>{meal.CategoryName}</h3>");
             html.AppendLine($"<img src=\"{meal.ImageUrl}\" />");
-            await this.emailSender.SendEmailAsync("trainsleepeatandstayfit@gmail.com", "StayFit", "sashopro13@gmail.com", meal.Name, html.ToString());
+            await this.emailSender.SendEmailAsync("trainsleepeatandstayfit@gmail.com", "StayFit", $"{user.Email}", meal.Name, html.ToString());
             return this.RedirectToAction(nameof(this.MealDetails), new { id });
         }
     }

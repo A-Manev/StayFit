@@ -88,32 +88,38 @@
                         @Model.CreatedOn.ToShortDateString()
                     </i>
                 </div>
-                <div class="col-md-8">
-                    <ul class="item-rating">
-                        @for (int i = 1; i <= 5; i++)
-                        {
-                            if (i <= Model.AverageVote)
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="col-md-8">
+                        <ul class="item-rating">
+                            @for (int i = 1; i <= 5; i++)
                             {
-                                <li class="star star-fill" data-vote="@i"><i class="fas fa-star"></i></li>
+                                if (i <= Model.AverageVote)
+                                {
+                                    <li class="star star-fill" data-vote="@i"><i class="fas fa-star"></i></li>
+                                }
+                                else
+                                {
+                                    <li class="star star-empty" data-vote="@i"><i class="fas fa-star"></i></li>
+                                }
                             }
-                            else
-                            {
-                                <li class="star star-empty" data-vote="@i"><i class="fas fa-star"></i></li>
-                            }
-                        }
-                        <li><span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span> </li>
-                    </ul>
-                </div>
+                            <li><span id="averageVoteValue">@Model.AverageVote.ToString("0.0")</span><span> / 5</span> </li>
+                        </ul>
+                    </div>
+                }
             </div>
         </div>
         <div class="col-sm">
             <div class="form-row m-4">
                 <h3>@Model.Name</h3>
-                <div class="col float-right">
-                    <form method="post" asp-action="SendToEmail" asp-route-id="@Model.Id">
-                        <button class="btn btn-warning">Send to my email</button>
-                    </form>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="col float-right">
+                        <form method="post" asp-action="SendToEmail" asp-route-id="@Model.Id">
+                            <button class="btn btn-warning">Send to my email</button>
+                        </form>
+                    </div>
+                }
             </div>
             <div class="form-row">
                 <ul style="list-style-type: none;">
