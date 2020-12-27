@@ -69,6 +69,11 @@
             return this.View();
         }
 
+        public IActionResult StatusCodeError(int errorCode)
+        {
+            return this.View();
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> UploadUserImage(HomePageUserViewModel inputModel)

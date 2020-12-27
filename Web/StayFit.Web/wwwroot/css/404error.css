@@ -1,0 +1,175 @@
+﻿.fundo {
+    animation: scales 3s alternate infinite;
+    transform-origin: center;
+}
+
+.pao-baixo {
+    animation: rotatepao 14s cubic-bezier(.1,.49,.41,.97) infinite;
+    transform-origin: center;
+}
+
+.pao-cima {
+    animation: rotatepao 7s 1s cubic-bezier(.1,.49,.41,.97) infinite;
+    transform-origin: center;
+}
+
+.olhos {
+    animation: olhos 2s alternate infinite;
+    transform-origin: center;
+}
+
+.left-sparks {
+    animation: left-sparks 4s alternate infinite;
+    transform-origin: 150px 156px;
+}
+
+.right-sparks {
+    animation: left-sparks 4s alternate infinite;
+    transform-origin: 310px 150px;
+}
+
+.olhos {
+    animation: olhos 2s alternate infinite;
+    transform-origin: center;
+}
+
+@keyframes scales {
+    from {
+        transform: scale(0.98)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+@keyframes rotatepao {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50%, 60% {
+        transform: rotate(-20deg)
+    }
+
+    100% {
+        transform: rotate(0deg)
+    }
+}
+
+@keyframes olhos {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(30deg);
+    }
+}
+
+@keyframes left-sparks {
+    0% {
+        opacity: 0;
+    }
+}
+
+
+.main {
+    min-height: 600px;
+    margin: 0px auto;
+    width: auto;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: dash 4s alternate infinite;
+}
+
+@keyframes dash {
+    0%, 30% {
+        fill: 4B4B62;
+        stroke-dashoffset: 0;
+    }
+
+    80%,100% {
+        fill: transparent;
+        stroke-dashoffset: -200;
+    }
+}
+
+.animate {
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+.action-button {
+    position: relative;
+    padding: 10px 40px;
+    margin: 0px 10px 10px 0px;
+ /*   float: unset;*/
+    border-radius: 10px;
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.blue {
+    background-color: #3498DB;
+    border-bottom: 5px solid #2980B9;
+    text-shadow: 0px -2px #2980B9;
+}
+
+.red {
+    background-color: #E74C3C;
+    border-bottom: 5px solid #BD3E31;
+    text-shadow: 0px -2px #BD3E31;
+}
+
+.green {
+    background-color: #82BF56;
+    border-bottom: 5px solid #669644;
+    text-shadow: 0px -2px #669644;
+}
+
+.yellow {
+    background-color: #F2CF66;
+    border-bottom: 5px solid #D1B358;
+    text-shadow: 0px -2px #D1B358;
+}
+
+.action-button:active {
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+    border-bottom: 1px solid;
+}
+
+.cont_error > h1 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 150px;
+    color: #9294AE;
+    /*position: relative;
+    left: -100%;*/
+    transition: all 0.5s;
+}
+
+
+.cont_error > p {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: 5px;
+    color: #9294AE;
+    position: center;
+   /* left: 100%;*/
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+    -webkit-transition: all 0.5s;
+    -webkit-transition-delay: 0.5s;
+}

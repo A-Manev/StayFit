@@ -135,6 +135,7 @@
             }
             else
             {
+                app.UseStatusCodePagesWithReExecute("/Home/StatusCodeError", "?errorCode={0}");
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
