@@ -13,6 +13,7 @@
     using StayFit.Services.Messaging;
     using StayFit.Services.ViewRender;
     using StayFit.Web.ViewModels.Meals;
+    using StayFit.Web.ViewModels.Users;
 
     public class MealsController : Controller
     {
@@ -23,6 +24,7 @@
         private readonly IWebHostEnvironment environment;
         private readonly IEmailSender emailSender;
         private readonly IViewRenderService viewRenderService;
+        private readonly IUsersService usersService;
 
         public MealsController(
             UserManager<ApplicationUser> userManager,
@@ -31,7 +33,8 @@
             IMealService mealService,
             IWebHostEnvironment environment,
             IEmailSender emailSender,
-            IViewRenderService viewRenderService)
+            IViewRenderService viewRenderService,
+            IUsersService usersService)
         {
             this.userManager = userManager;
             this.categoriesService = categoriesService;
@@ -40,6 +43,7 @@
             this.environment = environment;
             this.emailSender = emailSender;
             this.viewRenderService = viewRenderService;
+            this.usersService = usersService;
         }
 
         [Authorize]
@@ -109,9 +113,16 @@
             return this.View(viewModel);
         }
 
-        public IActionResult MealDetails(int id)
+        public async Task<IActionResult> MealDetails(int id)
         {
             var viewModel = this.mealService.GetMealDetails<MealDetailsViewModel>(id);
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+
+                viewModel.CurrentUser = this.usersService.GetById<MealDetailsUserViewModel>(user.Id);
+            }
 
             return this.View(viewModel);
         }

@@ -10,6 +10,7 @@
     using StayFit.Data.Models.Enums;
     using StayFit.Services.Mapping;
     using StayFit.Web.ViewModels.Comments;
+    using StayFit.Web.ViewModels.Users;
 
     public class MealDetailsViewModel : IMapFrom<Meal>, IHaveCustomMappings
     {
@@ -56,6 +57,8 @@
         public string SubCategoryName { get; set; }
 
         public double AverageVote { get; set; }
+
+        public MealDetailsUserViewModel CurrentUser { get; set; }
 
         public IEnumerable<MealCommentViewModel> Comments { get; set; }
 

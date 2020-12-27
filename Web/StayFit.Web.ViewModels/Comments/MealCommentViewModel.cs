@@ -22,6 +22,8 @@
 
         public string UserLastName { get; set; }
 
+        public string UserId { get; set; }
+
         public string UserImage { get; set; }
 
         public string Content { get; set; }
@@ -32,10 +34,10 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<ApplicationUser, MealCommentViewModel>()
+            configuration.CreateMap<Comment, MealCommentViewModel>()
                  .ForMember(x => x.UserImage, opt =>
                    opt.MapFrom(x =>
-                   "/images/users/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                   "/images/users/" + x.User.Images.FirstOrDefault().Id + "." + x.User.Images.FirstOrDefault().Extension));
             configuration.CreateMap<Comment, MealCommentViewModel>()
                  .ForMember(x => x.CommentLikes, options =>
                  {

@@ -30,39 +30,42 @@
                                             <p class="comment-text">@Html.Raw(comment.SanitizedContent)</p>
                                         </div>
                                     </div>
-                                    <div class="bg-white p-2">
-                                        <div class="d-flex flex-row fs-12">
-                                            <form method="post">
-                                                <div class="like p-2 cursor">
-                                                    <a @*onclick="like(@comment.Id)"*@>
-                                                        <i class="far fa-thumbs-up" data-i-holder="@comment.Id" onclick="like(@comment.Id)" id="likesCount">@comment.CommentLikes</i><span class="ml-1">Like</span>
-                                                    </a>
-                                                </div>
-                                            </form>
-                                            <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" onclick="pushParentId(@comment.Id)"><i class="far fa-comment-dots"></i><span class="ml-1">Comment</span></div>
-                                            <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + two)" href="#collapse-@(comment.Id + two)"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="bg-white p-2">
+                                            <div class="d-flex flex-row fs-12">
+                                                <form method="post">
+                                                    <div class="like p-2 cursor">
+                                                        <a @*onclick="like(@comment.Id)"*@>
+                                                            <i class="far fa-thumbs-up" data-i-holder="@comment.Id" onclick="like(@comment.Id)" id="likesCount">@comment.CommentLikes</i><span class="ml-1">Like</span>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                                <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" onclick="pushParentId(@comment.Id)"><i class="far fa-comment-dots"></i><span class="ml-1">Comment</span></div>
+                                                <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + two)" href="#collapse-@(comment.Id + two)"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="collapse-@(comment.Id + one)" class="bg-light p-2 collapse" data-parent="#myGroup">
-                                        <div class="d-flex flex-row align-items-start">
-                                            <img class="rounded-circle mr-2" src="@*https://russiansbrides.com/wp-content/uploads/2020/02/polish.jpg*@" width="40">
-                                            <form asp-controller="Comments" asp-action="Create" method="post" id="AddParentId">
-                                                <input type="hidden" name="ParentId" value="0" />
-                                                <input type="hidden" name="MealId" value="@this.Model.Id" />
-                                                <div>
-                                                    <label for="Content" id="elementtoScrollToID"></label>
-                                                    <textarea name="Content" id="Content" class="form-control edit-with-tinymce"></textarea>
-                                                </div>
-                                                <div class="mt-2 text-right">
-                                                    <input type="submit" class="btn btn-outline-success btn-sm" name="name" value="Reply" />
-                                                    <button class="btn btn-outline-danger btn-sm ml-1 shadow-none" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" type="button">Cancel</button>
-                                                </div>
-                                            </form>
+                                        <div id="collapse-@(comment.Id + one)" class="bg-light p-2 collapse" data-parent="#myGroup">
+                                            <div class="d-flex flex-row align-items-start">
+                                                <img class="rounded-circle mr-2" src="@Model.CurrentUser.ImageUrl" width="40">
+                                                <form asp-controller="Comments" asp-action="Create" method="post" id="AddParentId">
+                                                    <input type="hidden" name="ParentId" value="0" />
+                                                    <input type="hidden" name="MealId" value="@this.Model.Id" />
+                                                    <div>
+                                                        <label for="Content" id="elementtoScrollToID"></label>
+                                                        <textarea name="Content" id="Content" class="form-control edit-with-tinymce"></textarea>
+                                                    </div>
+                                                    <div class="mt-2 text-right">
+                                                        <input type="submit" class="btn btn-outline-success btn-sm" name="name" value="Reply" />
+                                                        <button class="btn btn-outline-danger btn-sm ml-1 shadow-none" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-@(comment.Id + one)" href="#collapse-@(comment.Id + one)" type="button">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="collapse-@(comment.Id + two)" class="bg-light p-2 collapse" data-parent="#myGroup">
-                                        <div class="d-flex flex-row align-items-start"><i class="fab fa-facebook-f border p-3 rounded mr-1"></i><i class="fab fa-twitter border p-3 rounded mr-1"></i><i class="fab fa-linkedin border p-3 rounded mr-1"></i><i class="fab fa-instagram border p-3 rounded mr-1"></i><i class="fab fa-dribbble border p-3 rounded mr-1"></i> <i class="fab fa-pinterest-p border p-3 rounded mr-1"></i> </div>
-                                    </div>
+                                        <div id="collapse-@(comment.Id + two)" class="bg-light p-2 collapse" data-parent="#myGroup">
+                                            <div class="d-flex flex-row align-items-start"><i class="fab fa-facebook-f border p-3 rounded mr-1"></i><i class="fab fa-twitter border p-3 rounded mr-1"></i><i class="fab fa-linkedin border p-3 rounded mr-1"></i><i class="fab fa-instagram border p-3 rounded mr-1"></i><i class="fab fa-dribbble border p-3 rounded mr-1"></i> <i class="fab fa-pinterest-p border p-3 rounded mr-1"></i> </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             <div class="card-body">
