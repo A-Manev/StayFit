@@ -1,5 +1,6 @@
 # :pencil2: StayFit
 This is my defense project for <a href="https://softuni.bg/trainings/3177/asp-dot-net-core-october-2020">ASP.NET Core course</a> course at [SoftUni](https://softuni.bg).
+StayFit helps you keep track of your daily food and beverage intake, calculating all your nutrients, calories, vitamins and organize workouts for you.
 
 # 🛠 Built with:
 * [.NET 5.0](https://github.com/dotnet/core)
